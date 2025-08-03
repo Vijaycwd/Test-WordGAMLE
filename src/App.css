@@ -1,0 +1,303 @@
+body{
+  display: block !important;
+}
+#root{
+  width:100%;
+}
+.container{
+  padding: 0px 20px;
+}
+.btn-primary{
+  background-color: #00BF63 !important;
+  border-color: #00BF63!important;
+}
+.btn-warning{
+  background-color: #ffc107 !important;
+  border-color: #ffc107!important;
+}
+.btn-danger{
+  background-color: #dc3545 !important;
+  border-color: #dc3545!important;
+}
+.wordle-btn{
+  background-color: #a0c35a!important;
+  border-color: #a0c35a!important;
+}
+.connections-btn{
+  background-color: #B3A7FF!important;
+  border-color: #B3A7FF!important;
+}
+.phrazle-btn{
+  background-color: #218838!important;
+  border-color: #218838!important;
+}
+.score-board{
+  width:135px;
+  margin-bottom: 30px;
+}
+.bg-primary-gn{
+  background-color: #a0c35a!important;
+}
+
+.bg-white{
+  background-color: #ffffff;
+}
+.float-left{
+  float:left;
+}
+.float-right{
+  float:right;
+}
+
+.statistics h2, .guess-distribution h2{
+  font-weight: 700;
+  font-size: 14px;
+}
+.statistics ul{
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+  list-style: none;
+  text-align: center;
+  padding: 5px;
+}
+.statistics ul li{
+  flex: 1;
+  margin-left: 12px;
+}
+.statistics .value{
+  font-size: 35px;
+  font-weight: 500;
+}
+.statistics .bottom-text{
+  font-size: 12px;
+  font-weight: 400;
+}
+.form-validation-error{
+  color:#ff0000;
+  font-size: 14px;
+
+}
+.score-by-date{
+  list-style: none;
+}
+::marker {
+  font-weight: bold;
+}
+.user-profile-popup
+{
+  position: fixed;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  padding: 20px 0px;
+}
+.user-profile-popup .user-register-form{
+  width: 40%;
+  background-color: #ffffff;
+}
+.user-profile-button{
+  display: flex;
+  justify-content: space-around;
+}
+.edit-icon {
+  font-size: 14px;
+  position: absolute;
+  top: 25%;
+  right: 28%;
+  cursor: pointer;
+}
+.bottom-message, .bottom-btn{
+  font-size: 12px;
+}
+.guess-item{
+  gap: 5px;
+}
+.guess-item-value{
+  font-weight: bold;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 18px;
+  height: 18px;
+  padding-right: 20px;
+}
+.phrasle-row-score{
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.notification-panel{
+  position: absolute;
+  top: 10%;
+  right: 20px;
+}
+.dropdown-menu.show.dropdown-menu-end {
+  width: 350px;
+}
+#group-invites{
+  background-color:#00BF63;
+  font-size: 12px;
+  padding: 5px;
+  color: #ffffff;
+}
+.dropdown-toggle::after{
+  font-size: 15px;
+}
+span.notification-count.badge.bg-danger {
+  position: absolute;
+  border-radius: 50%;
+  top: -3px;
+  right: -5px;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  padding: 2px;
+  font-size: 14px;
+}
+.leaderboard .progress{
+  height: 25px !important;
+  background-color: transparent;
+  border-radius: 0px;
+}
+.wordle-progress-bar, .connections-progress-bar, .phrazle-progress-bar{
+  height: 20px !important;
+  border-radius: 0px;
+  position: relative;
+  background-color: #787c7e;
+}
+.progress-label {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color:#f8f8f8;
+  width: 100%;
+  pointer-events: none; 
+  font-weight: 500;
+  font-size: 15px;
+}
+.wordle-progressbar .progress-bar, .wordle-progress-bar .progress-bar
+{
+  background-color: #a0c35a!important;
+  
+}
+.connections-progressbar .progress-bar, .connections-progress-bar .progress-bar
+{
+  background-color: #B3A7FF!important;
+  
+}
+.phrazle-progressbar .progress-bar, .phrazle-progress-bar .progress-bar
+{
+  background-color: #218838!important;
+  
+}
+.fas{
+  font-size: 15px;
+}
+.header-section .game-btn {
+  font-size: 15px;
+  padding: 5px;
+}
+.missed-user-section{
+  background-color: #f8f8f8;
+}
+.cropper-view-box,
+.cropper-face {
+  border-radius: 50% !important;
+}
+.profile-pic-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+}
+
+.profile-pic-label {
+  cursor: pointer;
+  display: block;
+}
+
+.profile-pic-img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.edit-icon-label {
+  cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background-color: #00BF63;
+  border-radius: 50%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+.upload-icon-label {
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25px;
+  height: 25px;
+  background-color: #00BF63;
+  border-radius: 50%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+.profile-pic-input {
+  display: none;
+}
+.user-avatar{
+  border-radius: 50%;
+}
+.ql-editor {
+  font-size: 16px;
+}
+.user-avatar{
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+}
+button, input{
+cursor: pointer;
+}
+/* Hide on larger screens */
+@media only screen and (max-width: 600px)  {
+  .navbar-collapse {
+    position: absolute;
+    top: 100%;
+    right: 5%;
+    background-color: white;
+    z-index: 999;
+    padding: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width:200px;
+  }
+  /* Target the hamburger icon bars */
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%2300BF63' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+
+}
