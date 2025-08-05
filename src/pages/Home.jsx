@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Form, Button, InputGroup, Modal } from 'react-bootstrap';
+import { Container, Row, Col, Form, Button, InputGroup, Modal, Carousel } from 'react-bootstrap';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
@@ -8,6 +8,12 @@ import { toast } from 'react-toastify';
 import Axios from 'axios';
 import FeedbackButton from './FeedbackButton';
 import { useLocation } from 'react-router-dom';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper/modules';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+
 
 function Home() {
     const baseURL = import.meta.env.VITE_BASE_URL;
@@ -24,6 +30,9 @@ function Home() {
     const encryptedId = params.get('group_id');
     const groupId = encryptedId;
     const registerPath = groupId ? `/register?group_id=${groupId}` : `/register`;
+
+    const items = ['Wordle', 'Connections', 'Phrazle'];
+
     // Check if the user already entered the password
     useEffect(() => {
         if (localStorage.getItem("pageUnlocked") === "true") {
@@ -118,10 +127,26 @@ function Home() {
                     <Row>
                         <Col>
                             <p className='fs-4 text-center' dangerouslySetInnerHTML={{ __html: homepageText.heading }}></p>
+                             {!userAuthData || isEmptyObject ? (
+                                <Row>
+                                    <Col>
+                                        <Link className="btn btn-primary my-3 w-100" to={registerPath}>Create Profile</Link>
+                                        {/* <Button className="btn-lg mt-3" onClick={loginformClick} style={{ width: "60%" }}>Login</Button> */}
+                                    </Col>
+                                    <Col>
+                                        <Button className="mt-3 w-100" onClick={loginformClick}>Login</Button>
+                                    </Col>
+                                </Row>
+                            ) : (
+                                <div>
+                                    
+                                </div>
+                            )}
+                            
                             <p className='text-center' dangerouslySetInnerHTML={{ __html: homepageText.text1 }}></p>
                         </Col>
                     </Row>
-                    <Row>
+                    {/* <Row>
                         <Col className="text-center py-1" md={4} s={12}>
                             <Button className="btn-lg" onClick={() => handleNavigation('wordle')}>Wordle</Button>
                         </Col>
@@ -130,6 +155,28 @@ function Home() {
                         </Col>
                         <Col className="text-center py-1" md={4} s={12}>
                             <Button className="btn-lg" onClick={() => handleNavigation('phrazle')}>Phrazle</Button>
+                        </Col>
+                    </Row> */}
+                    <Row>
+                        <Col>
+                            <Swiper
+                                slidesPerView={2}
+                                spaceBetween={20}
+                                // navigation
+                                modules={[Navigation]}
+                                className="mySwiper"
+                            >
+                                {items.map((item, index) => (
+                                <SwiperSlide key={index}>
+                                    <Button
+                                    className="btn-primary w-100 py-2 rounded"
+                                    onClick={() => handleNavigation(item)}
+                                    >
+                                    {item}
+                                    </Button>
+                                </SwiperSlide>
+                                ))}
+                            </Swiper>
                         </Col>
                     </Row>
                     <Row>
@@ -142,7 +189,8 @@ function Home() {
                             <p className='text-center' dangerouslySetInnerHTML={{ __html: homepageText.text3 }}></p>
                         </Col>
                     </Row>
-                    {!userAuthData || isEmptyObject ? (
+
+                    {/* {!userAuthData || isEmptyObject ? (
                         <div>
                             <p className='text-center'>Please create your profile and then click the game buttons and go from there!</p>
                             <Link className="btn btn-primary btn-lg my-3" to={registerPath} style={{ width: "60%" }}>Create Profile</Link>
@@ -152,7 +200,7 @@ function Home() {
                         <div>
                             
                         </div>
-                    )}
+                    )} */}
                 </Col>
             </Row>
             
