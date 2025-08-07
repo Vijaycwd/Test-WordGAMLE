@@ -7,6 +7,7 @@ import Logo from '../../../Logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FaPencilAlt, FaUpload } from 'react-icons/fa';
 import ImageCropModal from './Modals/ImageCropModal';
+import NotificationSettings from '../../../pages/groups/NotificationSettings';
 
 function UserProfile() {
     const baseURL = import.meta.env.VITE_BASE_URL;
@@ -265,6 +266,11 @@ function UserProfile() {
                             Manage Account
                         </Button>
                     </Form>
+                </Col>
+            </Row>
+            <Row className='align-content-center justify-content-center'>
+                <Col md={5}>
+                    <NotificationSettings userId= {userData.id}/>
                 </Col>
             </Row>
 

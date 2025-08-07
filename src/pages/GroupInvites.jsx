@@ -3,12 +3,12 @@ import { Col, Dropdown, Button, ListGroup, Badge } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const GroupInvites = () => {
+
+const GroupInvites = ({enable_invitation}) => {
 
   const baseURL = import.meta.env.VITE_BASE_URL;
   const USER_AUTH_DATA = JSON.parse(localStorage.getItem('auth'));
   const userId = USER_AUTH_DATA?.id;
-
   const [invites, setInvites] = useState([]);
   const [showDropdown, setShowDropdown] = useState(false);
   
@@ -17,6 +17,7 @@ const GroupInvites = () => {
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
   // Fetch group invites
+
   const fetchGroupInvites = async () => {
     try {
       const response = await axios.get(
@@ -126,13 +127,14 @@ const handleDeclineInvite = async (inviteId) => {
     console.error('Error declining invite:', error);
   }
 };
-
   // Invite polling effect
   useEffect(() => {
-    fetchGroupInvites();
-    inviteIntervalRef.current = setInterval(fetchGroupInvites, 8000);
-    return () => clearInterval(inviteIntervalRef.current);
-  }, []);
+    if (enable_invitation == 1) {
+      fetchGroupInvites();
+      inviteIntervalRef.current = setInterval(fetchGroupInvites, 8000);
+      return () => clearInterval(inviteIntervalRef.current);
+    }
+  }, [enable_invitation]);
 
   // Message polling effect
   useEffect(() => {
@@ -145,7 +147,7 @@ const handleDeclineInvite = async (inviteId) => {
     <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)}>
       <Dropdown.Toggle variant="light" id="group-invites">
         <i className="fas fa-bell"></i>
-        {Array.isArray(invites) && invites.length > 0 && (
+        {enable_invitation == 1 && Array.isArray(invites) && invites.length > 0 && (
           <Badge bg="danger" className="notification-count">
             {invites.length}
           </Badge>
@@ -154,7 +156,8 @@ const handleDeclineInvite = async (inviteId) => {
 
       <Dropdown.Menu ref={dropdownRef} align="end">
         <Dropdown.Header>Group Messages</Dropdown.Header>
-        {Array.isArray(invites) && invites.length > 0 ? (
+
+        {enable_invitation == 1 && Array.isArray(invites) && invites.length > 0 ? (
           <ListGroup variant="flush">
             {invites.map((invite) => (
               <ListGroup.Item key={invite.id}>

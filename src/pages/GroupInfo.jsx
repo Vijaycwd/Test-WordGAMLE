@@ -8,6 +8,8 @@ import { IoClose } from "react-icons/io5";
 import GroupModal from '../constant/Models/GroupModal';
 import GroupExitConfirmModal from '../constant/Models/GroupExitConfirmModal';
 import GroupDeleteConfirmModal from '../constant/Models/GroupDeleteConfirmModal';
+import GroupDeletePreference from '../constant/Models/GroupDeletePreference';
+
 import MemberProfile from '../constant/Models/MemberProfile';
 import { FaTrash } from 'react-icons/fa';
 import InviteGroupandSite from './InviteGroupAndSite';
@@ -30,6 +32,8 @@ function GroupInfo() {
     const [invites, setInvites] = useState([]);
     const [showProfile, setShowProfile] = useState(false);
     const [selectedMember, setSelectedMember] = useState(null);
+    const [showInviteDeleteModal, setShowInviteDeleteModal] = useState(false);
+    const [selectedInviteId, setSelectedInviteId] = useState(null);
 
     useEffect(() => {
         fetchGroupInfo();
@@ -398,12 +402,15 @@ function GroupInfo() {
 
                                 {/* Delete Icon */}
                                 <Col xs="auto" >
-                                <Button
-                                    variant="danger"
-                                    size="sm"
-                                    onClick={() => handleDeleteInvite(invite.id)}
-                                    >
-                                    <FaTrash />
+                                    <Button
+                                        variant="danger"
+                                        size="sm"
+                                        onClick={() => {
+                                            setSelectedInviteId(invite.id);
+                                            setShowInviteDeleteModal(true);
+                                        }}
+                                        >
+                                        <FaTrash />
                                     </Button>
                                 </Col>
                             </Row>
@@ -440,6 +447,14 @@ function GroupInfo() {
                 setShowDeleteConfirm(false);
             }}
             />   
+            <GroupDeletePreference
+            show={showInviteDeleteModal}
+            onHide={() => setShowInviteDeleteModal(false)}
+            onConfirm={() => {
+                handleDeleteInvite(selectedInviteId);
+                setShowInviteDeleteModal(false);
+            }}
+            />
             {/* Group Edit Modal */}
             <GroupModal 
                 showForm={showModal} 

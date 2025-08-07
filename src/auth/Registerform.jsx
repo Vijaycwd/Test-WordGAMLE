@@ -182,23 +182,23 @@ function Registerform() {
                     updatedDate: createdAt
                 };
 
-                await Axios.post(`${baseURL}/games/wordle/create-statistics.php`, {
-                    ...statsPayload,
-                    guessDistribution: [0, 0, 0, 0, 0, 0],
-                    handleHighlight: [0]
-                });
+                // await Axios.post(`${baseURL}/games/wordle/create-statistics.php`, {
+                //     ...statsPayload,
+                //     guessDistribution: [0, 0, 0, 0, 0, 0],
+                //     handleHighlight: [0]
+                // });
 
-                await Axios.post(`${baseURL}/games/connections/create-statistics.php`, {
-                    ...statsPayload,
-                    guessDistribution: [0, 0, 0, 0, 0],
-                    handleHighlight: 0
-                });
+                // await Axios.post(`${baseURL}/games/connections/create-statistics.php`, {
+                //     ...statsPayload,
+                //     guessDistribution: [0, 0, 0, 0, 0],
+                //     handleHighlight: 0
+                // });
 
-                await Axios.post(`${baseURL}/games/phrazle/create-statistics.php`, {
-                    ...statsPayload,
-                    guessDistribution: [0, 0, 0, 0, 0, 0],
-                    handleHighlight: [0]
-                });
+                // await Axios.post(`${baseURL}/games/phrazle/create-statistics.php`, {
+                //     ...statsPayload,
+                //     guessDistribution: [0, 0, 0, 0, 0, 0],
+                //     handleHighlight: [0]
+                // });
                 navigate('/login');
             } else {
                 toast.error(res.data.message || "Registration failed");
@@ -252,7 +252,10 @@ function Registerform() {
                         <Row>
                             <Col md={6}>
                                 <Form.Group className="mb-3">
-                                    <Form.Label>Username <span style={{ color: 'red' }}>*</span></Form.Label>
+                                    <Form.Label>Gamle Name <span style={{ color: 'red' }}>*</span></Form.Label>
+                                    <div style={{ fontSize: '0.875rem', color: '#6c757d', marginBottom: '0.5rem' }}>
+                                        (This is the name that will appear in your Leaderboards)
+                                    </div>
                                     <Form.Control
                                         type="text"
                                         value={username}

@@ -160,8 +160,8 @@ function Home() {
                     <Row>
                         <Col>
                             <Swiper
-                                slidesPerView={2}
-                                spaceBetween={20}
+                                slidesPerView={3}
+                                spaceBetween={5}
                                 // navigation
                                 modules={[Navigation]}
                                 className="mySwiper"
@@ -169,7 +169,7 @@ function Home() {
                                 {items.map((item, index) => (
                                 <SwiperSlide key={index}>
                                     <Button
-                                    className="btn-primary w-100 py-2 rounded"
+                                    className="w-100 py-2 rounded cwd-game-btn"
                                     onClick={() => handleNavigation(item)}
                                     >
                                     {item}
