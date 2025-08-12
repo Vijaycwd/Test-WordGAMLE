@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 import GroupInvites from '../../pages/GroupInvites';
 import FeedbackButton from '../../pages/FeedbackButton';
-import useNotificationSettings from '../../pages/hook/useNotificationSettings';
+// import useNotificationSettings from '../../pages/hook/useNotificationSettings';
 
 
 const Headerbar = () => {
@@ -27,7 +27,7 @@ const Headerbar = () => {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState();
   const collapseRef = useRef();
-  const { settings, loading } = useNotificationSettings(userId);
+  // const { settings, loading } = useNotificationSettings(userId);
   
   useEffect(() => {
   if (userEmail?.trim()) {
@@ -180,8 +180,11 @@ const handleInviteFriends = async () => {
             </svg>
           </Link>
           
-          {userEmail && settings && (
+          {/* {userEmail && settings && (
             <GroupInvites enable_invitation={settings?.group_invitation ?? 0} />
+          )} */}
+          {userEmail &&  (
+            <GroupInvites/>
           )}
           {userEmail === "cassandradroogan@gmail.com" && (
             <>
