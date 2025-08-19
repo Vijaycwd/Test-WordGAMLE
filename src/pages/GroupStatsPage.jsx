@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import GroupLeaderboardScores from './GroupLeaderboard/GroupLeaderboardScores';
 import GroupScoreByDate from './GroupLeaderboard/GroupScoreByDate';
 import MemberProfile from '../constant/Models/MemberProfile';
-import GroupGameChat from './GroupLeaderboard/GroupGameChat';
+import GroupGameChatPopup  from '../constant/Models/GroupGameChatPopup';
 import dayjs from "dayjs";
 
 function GroupStatsPage() {
@@ -57,8 +57,8 @@ function GroupStatsPage() {
         </Col>
       </Row>
       <Row>
-        <Col>
-          <GroupGameChat
+        <Col className="text-center">
+          <GroupGameChatPopup 
             groupId={id}
             gameName={game}
             createdAt={dayjs().format("YYYY-MM-DD HH:mm:ss")}
