@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import GroupLeaderboardScores from './GroupLeaderboard/GroupLeaderboardScores';
 import GroupScoreByDate from './GroupLeaderboard/GroupScoreByDate';
 import MemberProfile from '../constant/Models/MemberProfile';
-import GroupGameChatPopup  from '../constant/Models/GroupGameChatPopup';
+import GroupGameChat  from '../pages/GroupLeaderboard/GroupGameChat';
 import dayjs from "dayjs";
 
 function GroupStatsPage() {
@@ -40,11 +40,6 @@ function GroupStatsPage() {
     fetchGroupDetails();
   }, [id, userId]);
 
-  // const getAMPMPeriod = () => {
-  //   const hour = new Date().getHours();
-  //   return hour < 12 ? 'AM' : 'PM';
-  // };
-
   return (
     <>
     <Container>
@@ -58,7 +53,7 @@ function GroupStatsPage() {
       </Row>
       <Row>
         <Col className="text-center">
-          <GroupGameChatPopup 
+          <GroupGameChat 
             groupId={id}
             gameName={game}
             createdAt={dayjs().format("YYYY-MM-DD HH:mm:ss")}

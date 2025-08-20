@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import GroupGameChat from "../../pages/GroupLeaderboard/GroupGameChat";
 
-function GroupGameChatPopup({ groupId, gameName, createdAt, userId }) {
+function GroupGameChatPopup({ groupId, gameName, createdAt, periodType, userId }) {
   const [show, setShow] = useState(false);
+
+  // ✅ Get current period (AM/PM)
+  const now = new Date();
+  const period = now.getHours() < 12 ? "AM" : "PM";
 
   return (
     <>
@@ -13,10 +17,10 @@ function GroupGameChatPopup({ groupId, gameName, createdAt, userId }) {
       </Button>
 
       {/* Popup Modal */}
-      <Modal 
-        show={show} 
-        onHide={() => setShow(false)} 
-        size="lg" 
+      <Modal
+        show={show}
+        onHide={() => setShow(false)}
+        size="lg"
         centered
       >
         <Modal.Header closeButton>
@@ -28,6 +32,7 @@ function GroupGameChatPopup({ groupId, gameName, createdAt, userId }) {
             groupId={groupId}
             gameName={gameName}
             createdAt={createdAt}
+            periodType={gameName === "phrazle" ? period : ""}
             userId={userId}
           />
         </Modal.Body>
