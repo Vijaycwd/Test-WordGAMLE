@@ -40,8 +40,10 @@ function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
 
   // Fetch only once on mount
   useEffect(() => {
-    fetchMessages();
-  }, []);
+    if (groupId && gameName) {
+      fetchMessages();
+    }
+  }, [groupId, gameName]);
 
   useEffect(scrollToBottom, [messages]);
 
@@ -59,6 +61,7 @@ function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
     fetchMessages(); // fetch again after sending
   };
 
+  console.log('vj', messages);
   return (
     <Row className="justify-content-center">
       <Col md={6}>
