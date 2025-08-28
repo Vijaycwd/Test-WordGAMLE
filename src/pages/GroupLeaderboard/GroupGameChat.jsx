@@ -3,20 +3,21 @@ import axios from "axios";
 import { InputGroup, Form, Button, Row, Col } from "react-bootstrap";
 import { FaPaperPlane } from "react-icons/fa";
 import TextareaAutosize from "react-textarea-autosize";
+import dayjs from "dayjs";
 
 function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
   const baseURL = import.meta.env.VITE_BASE_URL;
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
   const chatEndRef = useRef(null);
-
   // Fetch messages
   const fetchMessages = async () => {
+    const created_at = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD");
     try {
       const baseParams = {
         group_id: groupId,
         game_name: gameName,
-        created_at: new Date(createdAt).toISOString().split("T")[0],
+        created_at: created_at,
       };
       const params =
         gameName === "phrazle"

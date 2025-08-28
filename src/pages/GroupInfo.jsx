@@ -331,7 +331,7 @@ function GroupInfo() {
                         <Row className="justify-content-center">
                             <Col xs={10} md={6}>
                                 <Button
-                                    className="my-2 me-md-2 w-100"
+                                    className="mb-2 me-md-2 w-100"
                                     onClick={() =>
                                     navigate(`/group/${group.id}/stats`)
                                     }
@@ -346,7 +346,7 @@ function GroupInfo() {
                                 <Button className="btn btn-warning w-100" onClick={handleShowModal}>
                                     Edit Group Name
                                 </Button>
-                                <Button variant="danger" className="mt-2 w-100" onClick={() => {setShowDeleteConfirm(true);}} disabled={loading}>
+                                <Button variant="danger" className="w-100" onClick={() => {setShowDeleteConfirm(true);}} disabled={loading}>
                                     {deleteloading? (
                                         <>
                                         <Spinner
@@ -365,8 +365,8 @@ function GroupInfo() {
                                 </Col>
                             </>
                             ) : (
-                            <Col xs={6} md={3}>
-                                <Button className="btn btn-danger my-2" onClick={() => {setShowExitConfirm(true);}}>
+                            <Col xs={10} md={6}>
+                                <Button className="btn-danger w-100" onClick={() => {setShowExitConfirm(true);}}>
                                 Exit Group
                                 </Button>
                             </Col>

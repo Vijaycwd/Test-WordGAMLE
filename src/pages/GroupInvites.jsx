@@ -149,10 +149,10 @@ const handleDeclineInvite = async (inviteId) => {
     try {
       await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
         group_id: groupId,
+        msg_from:'group',
         game_name: game,
         user_id: userId, // current user
       });
-
       // After updating seen_ids, navigate to the link
      navigate(`/group/${groupId}/`);
     } catch (error) {
@@ -170,6 +170,7 @@ const handleDeclineInvite = async (inviteId) => {
     try {
       await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
         group_id: groupId,
+        msg_from:'game',
         game_name: game,
         user_id: userId, // current user
       });
@@ -178,10 +179,8 @@ const handleDeclineInvite = async (inviteId) => {
       navigate(`/group/${groupId}/stats/${game}`);
     } catch (error) {
       console.error("Axios error:", error);
-      navigate(`/group/${groupId}/stats/${game}`); // navigate anyway
     }
   };
-console.log('vj',groupMessages);
   return (
     <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)}>
       <Dropdown.Toggle variant="light" id="group-invites">
