@@ -42,8 +42,6 @@ const fetchGroupMessages = async () => {
   try {
     const response = await axios.get(`${baseURL}/groups/get-group-messages.php?user_id=${userId}`);
     const newMessages = Array.isArray(response.data.messages) ? response.data.messages : [];
-
-    console.log('Fetched messages:', newMessages); // ✅ this is correct
     setGroupMessages(newMessages);
   } catch (error) {
     console.error('Error fetching group messages:', error);
@@ -144,6 +142,26 @@ const handleDeclineInvite = async (inviteId) => {
     return () => clearInterval(messageIntervalRef.current);
   }, []);
 
+  const handleClickGroup = async(e, groupId) => {
+    e.preventDefault(); 
+    setGroupMessages([]);
+    setShowDropdown(!showDropdown)
+    try {
+      await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
+        group_id: groupId,
+        game_name: game,
+        user_id: userId, // current user
+      });
+
+      // After updating seen_ids, navigate to the link
+     navigate(`/group/${groupId}/`);
+    } catch (error) {
+      console.error("Axios error:", error);
+      
+    }
+    
+
+  }
 
   const handleClick = async (e, groupId, game, userId) => {
     e.preventDefault(); // stop immediate navigation
@@ -164,8 +182,7 @@ const handleDeclineInvite = async (inviteId) => {
       navigate(`/group/${groupId}/stats/${game}`); // navigate anyway
     }
   };
-
-
+console.log('vj',groupMessages);
   return (
     <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)}>
       <Dropdown.Toggle variant="light" id="group-invites">
@@ -214,9 +231,33 @@ const handleDeclineInvite = async (inviteId) => {
               {Array.isArray(groupMessages) && groupMessages.length > 0 &&
                 groupMessages.map((msg) => (
                   <ListGroup.Item key={`msg-${msg.id}`}>
-                    <p>{msg.message} <Link to={`/group/${msg.group_id}/stats/${msg.game}`} onClick={(e) => handleClick(e, msg.group_id, msg.game, userId)}>
-                     View
-                    </Link></p>
+                    {msg.msg_from == 'group' ? (
+                      <>
+                    
+                    <p>
+                      
+                      {msg.message}{" "}
+                      <Link
+                        to={`/group/${msg.group_id}`}
+                        onClick={(e) => handleClickGroup(e, msg.group_id, msg.game, userId)}
+                      >
+                        View
+                      </Link>
+                    </p>
+                    </>
+                  ) : (
+                    <>
+                    <p>
+                      {msg.message}{" "}
+                      <Link
+                        to={`/group/${msg.group_id}/stats/${msg.game_name}`}
+                        onClick={(e) => handleClick(e, msg.group_id, msg.game_name, userId)}
+                      >
+                        View
+                      </Link>
+                    </p>
+                    </>
+                  )}
                   </ListGroup.Item>
                 ))
               }
