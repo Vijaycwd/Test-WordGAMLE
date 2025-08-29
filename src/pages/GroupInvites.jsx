@@ -142,7 +142,7 @@ const handleDeclineInvite = async (inviteId) => {
     return () => clearInterval(messageIntervalRef.current);
   }, []);
 
-  const handleClickGroup = async(e, groupId) => {
+  const handleClickGroup = async(e, groupId, game, userId) => {
     e.preventDefault(); 
     setGroupMessages([]);
     setShowDropdown(!showDropdown)
@@ -159,8 +159,7 @@ const handleDeclineInvite = async (inviteId) => {
       console.error("Axios error:", error);
       
     }
-    
-
+  
   }
 
   const handleClick = async (e, groupId, game, userId) => {
@@ -239,7 +238,7 @@ console.log('vj',groupMessages);
                       {msg.message}{" "}
                       <Link
                         to={`/group/${msg.group_id}`}
-                        onClick={(e) => handleClickGroup(e, msg.group_id, msg.game, userId)}
+                        onClick={(e) => handleClickGroup(e, msg.group_id, msg.game_name, userId)}
                       >
                         View
                       </Link>
