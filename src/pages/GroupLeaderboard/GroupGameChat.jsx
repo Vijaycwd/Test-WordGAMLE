@@ -74,7 +74,8 @@ function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
         >
           {messages.length === 0 ? (
             <div className="text-center text-muted my-3">
-              Today messages not found
+              <p className="mb-0">No messages yet today.</p>
+              <p>Type your message to the group below.</p>
             </div>
           ) : (
             messages.map((msg, index) => {
