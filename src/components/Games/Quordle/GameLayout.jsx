@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import LoginModal from './Modals/LoginModal';
-import QuordleModal from './Modals/QuordleScoreModal';
+import QuordleScoreModal from './Modals/QuordleScoreModal';
 
 function GamesLayout() {
   const baseURL = import.meta.env.VITE_BASE_URL;
@@ -174,7 +174,7 @@ const determineAttempts = (score) => {
       handleHighlight: attempts,
       timeZone,
     };
-    console.log(scoreObject);
+    // console.log(scoreObject);
     try {
       const res = await Axios.post(
         `${baseURL}/games/quordle/create-score.php`,
@@ -277,7 +277,7 @@ const determineAttempts = (score) => {
           handleLoginPromptClose={handleLoginPromptClose}
         />
 
-        <QuordleModal
+        <QuordleScoreModal
           showForm={showForm}
           handleFormClose={handleFormClose}
           onSubmit={onSubmit}

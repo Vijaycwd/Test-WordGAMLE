@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Form, FloatingLabel } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
-const WordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScore, loginUsername }) => {
+const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScore, loginUsername }) => {
   
-  const [isPasted, setIsPasted] = useState(false);
+const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
 
   const calculateGameNumber = () => {
@@ -13,7 +13,6 @@ const WordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScore
 
     // Get current local time
     const now = new Date();
-
     // Convert both dates to local YYYY-MM-DD only (ignoring time)
     const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
     const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -118,4 +117,4 @@ useEffect(() => {
   );
 };
 
-export default WordleScoreModal;
+export default QuordleScoreModal;
