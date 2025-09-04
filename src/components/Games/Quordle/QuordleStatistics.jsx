@@ -22,7 +22,7 @@ function QuordleStatistics({ statschart }) {
       }, [statschart])
 
     function getStatsValue() {
-        Axios.get(`${baseURL}/games/Quordle/get-statistics.php?useremail=${loginuserEmail}`)
+        Axios.get(`${baseURL}/games/quordle/get-statistics.php?useremail=${loginuserEmail}`)
             .then((response) => {
                 if (typeof updateStatistics === 'function') {
                     updateStatistics();

@@ -3,7 +3,7 @@ import Axios from 'axios';
 import './QuordleScores.css';
 import { Container, Row, Col } from 'react-bootstrap';
 import Quordlestatistics from './QuordleStatistics';
-import ConnectionPlayService from './ConnectionPlayService';
+import QuordlePlayService from './QuordlePlayService';
 import QuordleScoreByDate from './QuordleScoreByDate';
 import QuordleGuessDistribution from './QuordleGuessDistribution';
 
@@ -33,14 +33,15 @@ function Quordletat() {
         const adjustedDate = new Date(localDate.getTime() - offsetMinutes * 60 * 1000); // Adjust time by the offset in milliseconds
     
         // Get the adjusted time in 24-hour format, e.g., "2024-12-02T15:10:29.476"
-        const todayDate = adjustedDate.toISOString().slice(0, -1);  // "2024-12-02T15:10:29.476" (24-hour format)
+        //const todayDate = adjustedDate.toISOString().slice(0, -1);  // "2024-12-02T15:10:29.476" (24-hour format)
+        const todayDate = adjustedDate.toISOString().split("T")[0];
         
-        Axios.get(`${baseURL}/games/Quordle/get-score.php`, {
+        Axios.get(`${baseURL}/games/quordle/get-score.php`, {
             params: { useremail: loginuserEmail, timeZone:timeZone, today: todayDate }
         })
         .then((res) => {
             if (res.data.status === "success") {
-                const scoreData = res.data.Quordlescore;
+                const scoreData = res.data.quordlescore;
                 setStatsChart(scoreData); // Update state with the score data
                 setLoading(false); // Set loading to false once data is fetched
             } else {
@@ -79,10 +80,22 @@ function Quordletat() {
                                     statschart && Array.isArray(statschart) && statschart.length > 0 ? (
                                         statschart.map((char, index) => {
                                             // console.log(char);
-                                            const cleanedScore = char.Quordlescore.replace(/[🟨,🟩,🟦,🟪]/g, "");
-                                            const lettersAndNumbersRemoved = char.Quordlescore.replace(/[a-zA-Z0-9,#:/\\]/g, "");
-                                            const removespace = lettersAndNumbersRemoved.replace(/\s+/g, '');
-                                            const QuordleScore = splitIntoRows(removespace, 4);
+                                            
+                                            const cleanedScore = char.quordlescore
+                                                .replace(/[🟨🟩⬛⬜🙂]/g, "") // remove tiles/emojis
+                                                .replace("m-w.com/games/quordle/", ""); // remove link
+
+                                            console.log('quordleScore', char.quordlescore);
+
+                                            const quordleScore = char.quordlescore
+                                            .split("\n")                                   // split into lines
+                                            .map(l => l.trim())                            // trim spaces
+                                            .filter(l => l === "" || /^[⬛⬜🟨🟩 ]+$/.test(l)) // keep empty lines OR tile rows with spaces
+                                            .join("\n");
+
+                                            console.log('cleanedQuordleScore', quordleScore);
+                                            
+                                            //const quordleScore = splitIntoRows(lettersAndNumbersRemoved);
                                             const createDate = char.createdat; // Ensure this matches your database field name
                                             const date = new Date(createDate);
                                             const todayDate = date.toLocaleDateString('en-US', {
@@ -99,9 +112,7 @@ function Quordletat() {
                                                     <div className={`wordle-score-board-text my-3 fs-5 text-center`}>{cleanedScore}</div>
                                                     <div className='today text-center fs-6 my-2 fw-bold'>{todayDate}</div>
                                                     <pre className='text-center'>
-                                                        {QuordleScore.map((row, rowIndex) => (
-                                                            <div key={rowIndex}>{row}</div>
-                                                        ))}
+                                                       {quordleScore}
                                                     </pre>
                                                     </>                 
                                                 </div>
@@ -110,7 +121,7 @@ function Quordletat() {
                                     ) : (
                                         <div className='text-center my-4'>
                                             <p>You have not played today.</p>
-                                            <ConnectionPlayService updateStatsChart={getStatChart}/>
+                                            <QuordlePlayService updateStatsChart={getStatChart}/>
                                         </div>
                                     )
                                 )}

@@ -36,7 +36,7 @@ function QuordleScoreByDate() {
         const timeZone = moment.tz.guess(); // Automatically get the user's local time zone
     
         // Make the API request to the endpoint with date and timeZone as query parameters
-        axios.get(`${baseURL}/games/Quordle/get-score.php`, {
+        axios.get(`${baseURL}/games/quordle/get-score.php`, {
             params: {
                 useremail: loginuserEmail,
                 today: date,

@@ -55,8 +55,6 @@ useEffect(() => {
   // This function is triggered when a paste happens
   const handlePaste = (event) => {
     const pastedData = event.clipboardData.getData('Text');
-    console.log('Pasted:', pastedData);
-
     const quordleTextExists = pastedData.includes('Quordle');
     const gamenumberExists = pastedData.includes(String(gameNumber)); // FIXED
     const todaysGameNumber = calculateGameNumber(); // Assuming this is used elsewhere

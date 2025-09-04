@@ -39,8 +39,8 @@ function Wordlestatechart() {
         const adjustedDate = new Date(localDate.getTime() - offsetMinutes * 60 * 1000); // Adjust time by the offset in milliseconds
     
         // Get the adjusted time in 24-hour format, e.g., "2024-12-02T15:10:29.476"
-        const todayDate = adjustedDate.toISOString().slice(0, -1);  // "2024-12-02T15:10:29.476" (24-hour format)
-
+        //const todayDate = adjustedDate.toISOString().slice(0, -1);  // "2024-12-02T15:10:29.476" (24-hour format)
+        const todayDate = adjustedDate.toISOString().split("T")[0];
         Axios.get(`${baseURL}/games/wordle/get-score.php`, {
             params: {
                 useremail: loginuserEmail,

@@ -17,6 +17,7 @@ import Quordlegame from './components/Games/Quordle/GameLayout';
 import Wordlestats from './components/Games/Wordle/Wordlestats';
 import ConnectionStat from './components/Games/Connections/ConnectionStat';
 import PhrazleStat from './components/Games/Phrazle/PhrazleStat';
+import QuordleStat from './components/Games/Quordle/QuordleStat';
 import GamesStat from './components/Games/GamesStat';
 import Groups from './pages/Groups';
 import Grouppage from './pages/Grouppage';
@@ -67,6 +68,7 @@ function App() {
           <Route exact path= '/wordlestats' element={<Wordlestats/>}/>
           <Route exact path= '/connectionstats' element={<ConnectionStat/>}/>
           <Route exact path= '/phrazlestats' element={<PhrazleStat/>}/>
+          <Route exact path= '/quordletats' element={<QuordleStat/>}/>
           <Route exact path= '/edit-profile' element={<UserProfile/>}/>
         </Route>
       </Routes>

@@ -52,34 +52,83 @@ function GamesLayout() {
     return rows;
   };
 
-  const determineAttempts = (score) => {
-    const value = score.replace(/[a-zA-Z0-9,#/\\]/g, "");
-    const removespace = value.replace(/\s+/g, "");
-    const QuordleScore = splitIntoRows(removespace, 4);
-  
-    let successGroups = new Set(); // Track unique winning patterns
-    let mistakeCount = 0; // Count rows that don't qualify as successful
-  
-    for (let i = 0; i < QuordleScore.length; i++) {
-      const row = QuordleScore[i].trim();
-  
-      // Add successful groups to the set
-      if (row === "🟨🟨🟨🟨" || row === "🟩🟩🟩🟩" || row === "🟪🟪🟪🟪" || row === "🟦🟦🟦🟦") {
-        successGroups.add(row);
+const determineAttempts = (score) => {
+    // 1. Keep only rows with tiles
+    let matrixLines = score
+      .split("\n")
+      .map(l => l.trim())
+      .filter(l => /(⬛|⬜|🟨|🟩)/.test(l) || l === "");
+ 
+    // 2. Split into groups by blank line
+    let groups = [];
+    let current = [];
+    for (let line of matrixLines) {
+      if (line === "") {
+        if (current.length) {
+          groups.push(current);
+          current = [];
+        }
       } else {
-        mistakeCount++; // Increment mistake count for invalid rows
+        current.push(line);
       }
     }
-  
-    // A win occurs if all 4 distinct groups are completed
-    const isWin = successGroups.size === 4;
-  
+    if (current.length) groups.push(current);
+ 
+    // 3. For each group, split into left/right
+    let word1 = groups[0]?.map(r => r.split(" ")[0]) || [];
+    let word2 = groups[0]?.map(r => r.split(" ")[1]) || [];
+    let word3 = groups[1]?.map(r => r.split(" ")[0]) || [];
+    let word4 = groups[1]?.map(r => r.split(" ")[1]) || [];
+ 
+    // 4. Build attemptsBlocks (each row = [w1, w2, w3, w4])
+    let maxLen = Math.max(word1.length, word2.length, word3.length, word4.length);
+    let attemptsBlocks = [];
+    for (let i = 0; i < maxLen; i++) {
+      attemptsBlocks.push([
+        word1[i] || null,
+        word2[i] || null,
+        word3[i] || null,
+        word4[i] || null
+      ]);
+    }
+ 
+    // 5. Track solvedAt (first row each word = 🟩🟩🟩🟩🟩)
+    let solvedAt = {};
+    [word1, word2, word3, word4].forEach((w, idx) => {
+      for (let i = 0; i < w.length; i++) {
+        if (w[i] === "🟩🟩🟩🟩🟩") {
+          solvedAt[idx + 1] = i + 1; // 1-based attempt number
+          break;
+        }
+      }
+    });
+ 
+    // 6. Stats
+    const solvedWords = Object.keys(solvedAt).length;
+    const isWin = solvedWords === 4;
+    const attempts = attemptsBlocks.length;
+    const winAttempt = isWin ? Math.max(...Object.values(solvedAt)) : null;
+ 
+    // 7. Sum solvedAt values
+    const sumSolvedAt = Object.values(solvedAt).reduce((a, b) => a + b, 0);
+ 
     return {
       isWin,
-      mistakeCount,
+      solvedAt,
+      sumSolvedAt,
+      winAttempt,
+      attempts
+      // solvedWords,
+      // sumSolvedAt,
+      // attemptsBlocks,
+      // word1,
+      // word2,
+      // word3,
+      // word4
     };
-  };
-  
+};
+
+
   
   
   const onSubmit = async (event) => {
@@ -89,14 +138,12 @@ function GamesLayout() {
       updateStatsChart();
     }
     setShowForm(false);
-  
-    const { isWin, mistakeCount } = determineAttempts(score);
-  
+    
+    const { isWin, attempts, sumSolvedAt } = determineAttempts(score);
+
     let updatedDistribution = [...guessDistribution];
-    if (isWin) {
-      if (mistakeCount >= 0 && mistakeCount < updatedDistribution.length) {
-        updatedDistribution[mistakeCount] += 1; // Update distribution for wins
-      }
+    if (isWin && attempts !== null && attempts <= updatedDistribution.length) {
+      updatedDistribution[attempts - 1] += 1; // update the correct bucket
       setGuessDistribution(updatedDistribution);
     }
   
@@ -117,16 +164,17 @@ function GamesLayout() {
     const scoreObject = {
       username: loginUsername,
       useremail: loginUserEmail,
-      Quordlecore: score,
-      gamleScore: mistakeCount,
+      quordlescore: score,
+      isWin,
+      gamleScore: sumSolvedAt,
       createdAt: adjustedCreatedAt,
       currentUserTime: adjustedCreatedAt,
       lastgameisWin: isWin,
       guessDistribution: updatedDistribution,
-      handleHighlight: mistakeCount,
+      handleHighlight: attempts,
       timeZone,
     };
-   // console.log(scoreObject);
+    console.log(scoreObject);
     try {
       const res = await Axios.post(
         `${baseURL}/games/quordle/create-score.php`,
@@ -161,7 +209,7 @@ function GamesLayout() {
           currentStreak: newCurrentStreak,
           maxStreak: newMaxStreak,
           guessDistribution: updatedDistribution,
-          handleHighlight: mistakeCount,
+          handleHighlight: attempts,
           updatedDate: adjustedCreatedAt,
         };
   
