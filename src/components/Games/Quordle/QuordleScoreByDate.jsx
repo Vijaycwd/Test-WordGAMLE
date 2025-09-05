@@ -140,10 +140,10 @@ function QuordleScoreByDate() {
                     {statsChart.length > 0 ? (
                         statsChart.map(item => {
                             const gamleScore = item.gamlescore;
-                            const cleanedScore = item.Quordlescore.replace(/[🟨🟩🟦🟪]/g, "");
-                            const lettersAndNumbersRemoved = item.Quordlescore.replace(/[a-zA-Z0-9,#/\\]/g, "");
+                            const cleanedScore = item.quordlescore.replace(/[🟨🟩🟦🟪]/g, "");
+                            const lettersAndNumbersRemoved = item.quordlescore.replace(/[a-zA-Z0-9,#/\\]/g, "");
                             const removespace = lettersAndNumbersRemoved.replace(/\s+/g, '');
-                            const QuordleScore = splitIntoRows(removespace, 4);
+                            const quordleScore = splitIntoRows(removespace, 4);
                             const gamePlayed = item.gamePlayed;
 
                             return (
@@ -153,7 +153,7 @@ function QuordleScoreByDate() {
                                         <p className='m-0'><strong>{item.username}</strong></p>
                                         <p className='m-1'>{cleanedScore}</p>
                                         <p className='my-1'>{formatCreatedAt(item.createdat)}</p>
-                                        {QuordleScore.map((row, rowIndex) => (
+                                        {quordleScore.map((row, rowIndex) => (
                                             <p className='m-1' key={rowIndex}>{row}</p>
                                         ))}
                                     </div>
