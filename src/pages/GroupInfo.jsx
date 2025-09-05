@@ -235,7 +235,7 @@ function GroupInfo() {
         <Container>
             <Row className="justify-content-center">
                 <Col xs={12} md={6} lg={6} className="border p-3 shadow rounded">
-                    <h3 className="text-center">{group.name} Group Members</h3>
+                    <h3 className="text-center">{group.name}</h3>
 
                     {members.map((member) => (
                     <Row
@@ -343,7 +343,7 @@ function GroupInfo() {
                             {userId === captainid ? (
                             <>
                                 <Col xs={10} md={6}>
-                                <Button className="btn btn-warning w-100" onClick={handleShowModal}>
+                                <Button className="mb-2 btn btn-warning w-100" onClick={handleShowModal}>
                                     Edit Group Name
                                 </Button>
                                 <Button variant="danger" className="w-100" onClick={() => {setShowDeleteConfirm(true);}} disabled={loading}>
