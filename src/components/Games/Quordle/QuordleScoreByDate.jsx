@@ -45,7 +45,7 @@ function QuordleScoreByDate() {
         })
         .then((response) => {
             if (response.data.status === "success") {
-                setStatsChart(response.data.Quordlescore);
+                setStatsChart(response.data.quordlescore);
                 setDataFetched(true);
                 setFetchedError(false);
             } else {
