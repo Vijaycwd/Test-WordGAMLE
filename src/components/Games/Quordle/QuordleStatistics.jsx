@@ -46,6 +46,7 @@ function QuordleStatistics({ statschart }) {
 
     const WinningPercent = Math.round((totalWin / totalGame) * 100);
     const isValidNumber = !isNaN(WinningPercent);
+    console.log('guessDistribution',guessDistribution);
     return (
             <div className="statistics">
                 <h2 className='text-uppercase'>Statistics</h2>
@@ -83,10 +84,9 @@ function QuordleStatistics({ statschart }) {
         
                         <div className="guess-distribution my-4">
                             <h2 className="text-uppercase">Guess Distribution</h2>
-                            {Object.entries(guessDistribution).map(([guess, count]) => {
-                                const total = Object.values(guessDistribution).reduce((a, b) => a + b, 0);
-                                const percent = total > 0 ? (count / total) * 100 : 0;
-    
+                            {Object.entries(guessDistribution).map(([guess, data]) => {
+                                // const total = Object.values(guessDistribution).reduce((a, b) => a + b, 0);
+                                // const percent = total > 0 ? (data.count / total) * 100 : 0;
                                 return (
                                     <div key={guess} className="mb-2">
                                     <div className="d-flex align-items-center">
@@ -98,16 +98,15 @@ function QuordleStatistics({ statschart }) {
                                       {/* Progress Bar */}
                                       <div style={{ width: "75%", margin: "0 10px", position: "relative" }}>
                                         <ProgressBar
-                                            className="Quordle-progress-bar"
-                                            now={percent}
+                                            className="quordle-progress-bar"
+                                            now={data.percent}
                                             label=""
                                         />
-                                        <span className="progress-label">{count > 0 ? count : ''}</span>
+                                        <span className="progress-label">{data.count > 0 ? data.count : ''}</span>
                                         </div>
-                                  
                                       {/* Percentage */}
                                       <div style={{ width: "5%", textAlign: "right", fontSize: "0.9rem" }}>
-                                        {`${percent.toFixed(0)}%`}
+                                        {`${data.percent.toFixed(0)}%`}
                                       </div>
                                     </div>
                                   </div>

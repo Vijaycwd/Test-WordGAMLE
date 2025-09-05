@@ -85,15 +85,13 @@ function Quordletat() {
                                                 .replace(/[🟨🟩⬛⬜🙂]/g, "") // remove tiles/emojis
                                                 .replace("m-w.com/games/quordle/", ""); // remove link
 
-                                            console.log('quordleScore', char.quordlescore);
-
                                             const quordleScore = char.quordlescore
                                             .split("\n")                                   // split into lines
                                             .map(l => l.trim())                            // trim spaces
                                             .filter(l => l === "" || /^[⬛⬜🟨🟩 ]+$/.test(l)) // keep empty lines OR tile rows with spaces
                                             .join("\n");
 
-                                            console.log('cleanedQuordleScore', quordleScore);
+                                            
                                             
                                             //const quordleScore = splitIntoRows(lettersAndNumbersRemoved);
                                             const createDate = char.createdat; // Ensure this matches your database field name

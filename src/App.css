@@ -201,6 +201,11 @@ span.notification-count.badge.bg-danger {
   background-color: #218838!important;
   
 }
+.quordle-progressbar .progress-bar, .quordle-progress-bar .progress-bar
+{
+  background-color: #02a34a!important;
+  
+}
 .fas{
   font-size: 15px;
 }
