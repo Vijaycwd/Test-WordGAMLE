@@ -4,30 +4,20 @@ import { toast } from 'react-toastify';
 
 const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScore, loginUsername }) => {
   
-const [isPasted, setIsPasted] = useState(false);
+  const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
 
   const calculateGameNumber = () => {
-    // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
-    const firstGameDate = new Date(2021, 12, 23); // Ensures local midnight
+  const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
+  const now = new Date();
 
-    // Get current local time
-    const now = new Date();
-    console.log(now);
-    // Convert both dates to local YYYY-MM-DD only (ignoring time)
-    const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
-    const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // Today’s UTC midnight
+  const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
-    // Calculate difference in full days
-    const diffInDays = Math.floor((nowDateOnly - firstDateOnly) / (24 * 60 * 60 * 1000));
+  // Difference in days
+  const diffInDays = Math.floor((todayUTC - firstGameDate) / (24 * 60 * 60 * 1000));
 
-    // Game number starts at 1
-    const currentGameNumber = diffInDays;
-
-    // console.log("Now Local Time:", now.toString());
-    // console.log("Calculated Game Number:", currentGameNumber);
-
-    return currentGameNumber;
+  return diffInDays; // Game # starts at 1
 };
 
 useEffect(() => {
