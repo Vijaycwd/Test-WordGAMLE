@@ -86,13 +86,10 @@ function Quordletat() {
                                                 .replace("m-w.com/games/quordle/", ""); // remove link
 
                                             const quordleScore = char.quordlescore
-                                            .split("\n")                                   // split into lines
-                                            .map(l => l.trim())                            // trim spaces
-                                            .filter(l => l === "" || /^[⬛⬜🟨🟩 ]+$/.test(l)) // keep empty lines OR tile rows with spaces
+                                            .split("\n")                        // split into lines
+                                            .map(l => l.trim())                 // trim spaces
+                                            .filter(l => /^[⬛⬜🟨🟩 ]+$/.test(l)) // allow tiles + space
                                             .join("\n");
-
-                                            
-                                            
                                             //const quordleScore = splitIntoRows(lettersAndNumbersRemoved);
                                             const createDate = char.createdat; // Ensure this matches your database field name
                                             const date = new Date(createDate);

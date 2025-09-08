@@ -68,7 +68,7 @@ function App() {
           <Route exact path= '/wordlestats' element={<Wordlestats/>}/>
           <Route exact path= '/connectionstats' element={<ConnectionStat/>}/>
           <Route exact path= '/phrazlestats' element={<PhrazleStat/>}/>
-          <Route exact path= '/quordletats' element={<QuordleStat/>}/>
+          <Route exact path= '/quordlestats' element={<QuordleStat/>}/>
           <Route exact path= '/edit-profile' element={<UserProfile/>}/>
         </Route>
       </Routes>

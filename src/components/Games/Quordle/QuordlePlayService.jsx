@@ -214,7 +214,7 @@ const determineAttempts = (score) => {
   
         await updateTotalGamesPlayed(TotalGameObject);
         setScore("");
-        navigate("/quordletats");
+        navigate("/quordlestats");
       } else {
         toast.error(res.data.message);
       }

@@ -10,6 +10,7 @@ import FeedbackButton from './FeedbackButton';
 import { useLocation } from 'react-router-dom';
 import TitleLogo from '../../src/WordleTitleLogo.png';
 
+
 function Home() {
     const baseURL = import.meta.env.VITE_BASE_URL;
     const userAuthData = JSON.parse(localStorage.getItem('auth')) || {};
@@ -117,15 +118,16 @@ function Home() {
         <Container className="login-section">
             <Row className="justify-content-center align-items-center py-2">
                 <Col xs={8}>
-                <Link to="/">
+                    <Link to="/">
                     <img className='img-fluid d-block m-auto' src={TitleLogo} alt="WordleGame" />
-                </Link>
+                    </Link>
                 </Col>
             </Row>
             <Row className="align-content-center justify-content-center text-center">
                 <Col md={6} className='bg-white px-3 py-3 text-center'>
                     <Row>
                         <Col>
+                            
                             {!userAuthData || isEmptyObject ? (
                                 <>
                                     {/* Content for users who have NOT created an account */}

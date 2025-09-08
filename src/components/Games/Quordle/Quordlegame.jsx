@@ -8,7 +8,7 @@ const Quordlegame = () => {
 
     const handleWordlestate = async (event) => {
         event.preventDefault();
-        navigate('/quordletats');
+        navigate('/quordlestats');
     };
     
     return (

@@ -70,7 +70,8 @@ function GroupStats() {
   const games = [
     { key: 'wordle', label: 'Wordle' },
     { key: 'connections', label: 'Connections' },
-    { key: 'phrazle', label: 'Phrazle' }
+    { key: 'phrazle', label: 'Phrazle' },
+    { key: 'quordle', label: 'Quordle' }
   ];
   // console.log('selectedGames',selectedGames);
   return (

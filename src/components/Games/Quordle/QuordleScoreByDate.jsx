@@ -138,26 +138,37 @@ function QuordleScoreByDate() {
                     </div>
 
                     {statsChart.length > 0 ? (
-                        statsChart.map(item => {
-                            const gamleScore = item.gamlescore;
-                            const cleanedScore = item.quordlescore.replace(/[🟨🟩🟦🟪]/g, "");
-                            const lettersAndNumbersRemoved = item.quordlescore.replace(/[a-zA-Z0-9,#/\\]/g, "");
-                            const removespace = lettersAndNumbersRemoved.replace(/\s+/g, '');
-                            const quordleScore = splitIntoRows(removespace, 4);
-                            const gamePlayed = item.gamePlayed;
+                        statsChart.map((item, index) => {
+                            const cleanedScore = item.quordlescore
+                                .replace(/[🟨🟩⬛⬜🙂]/g, "") // remove tiles/emojis
+                                .replace("m-w.com/games/quordle/", ""); // remove link
 
+                            const quordleScore = item.quordlescore
+                            .split("\n")                        // split into lines
+                            .map(l => l.trim())                 // trim spaces
+                            .filter(l => /^[⬛⬜🟨🟩 ]+$/.test(l)) // allow tiles + space
+                            .join("\n");
+                            //const quordleScore = splitIntoRows(lettersAndNumbersRemoved);
+                            const createDate = item.createdat; // Ensure this matches your database field name
+                            const date = new Date(createDate);
+                            const todayDate = date.toLocaleDateString('en-US', {
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                            });
+                            const gamleScore = item.gamlescore;
                             return (
-                                <li key={item.createdat}>
-                                    <div className='text-center'>
-                                        <h6 className='text-center pt-3'>Gamle Score: {gamleScore}</h6>
-                                        <p className='m-0'><strong>{item.username}</strong></p>
-                                        <p className='m-1'>{cleanedScore}</p>
-                                        <p className='my-1'>{formatCreatedAt(item.createdat)}</p>
-                                        {quordleScore.map((row, rowIndex) => (
-                                            <p className='m-1' key={rowIndex}>{row}</p>
-                                        ))}
-                                    </div>
-                                </li>
+                                
+                                <div key={index}>
+                                    <h5 className='text-center'>Gamle Score: {gamleScore}</h5>
+                                    <>
+                                    <div className={`wordle-score-board-text my-3 fs-5 text-center`}>{cleanedScore}</div>
+                                    <div className='today text-center fs-6 my-2 fw-bold'>{todayDate}</div>
+                                    <pre className='text-center'>
+                                        {quordleScore}
+                                    </pre>
+                                    </>                 
+                                </div>
                             );
                         })
                     ) : (

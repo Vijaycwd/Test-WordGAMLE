@@ -46,7 +46,7 @@ function QuordleStatistics({ statschart }) {
 
     const WinningPercent = Math.round((totalWin / totalGame) * 100);
     const isValidNumber = !isNaN(WinningPercent);
-    console.log('guessDistribution',guessDistribution);
+    // console.log('guessDistribution',guessDistribution);
     return (
             <div className="statistics">
                 <h2 className='text-uppercase'>Statistics</h2>
@@ -71,17 +71,6 @@ function QuordleStatistics({ statschart }) {
                                 <div className='bottom-text'>Max Streak</div>
                             </li>
                         </ul>
-                        <ul>
-                            <li>
-                                <div className='value'>{perfectPuzzles}</div>
-                                <div className='bottom-text'>Perfect Puzzles</div>
-                            </li>
-                            <li>
-                                <div className='value'>{purpleFirst}</div>
-                                <div className='bottom-text'>Purple First</div>
-                            </li>
-                        </ul>
-        
                         <div className="guess-distribution my-4">
                             <h2 className="text-uppercase">Guess Distribution</h2>
                             {Object.entries(guessDistribution).map(([guess, data]) => {

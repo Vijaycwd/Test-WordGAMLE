@@ -9,10 +9,11 @@ const [isPasted, setIsPasted] = useState(false);
 
   const calculateGameNumber = () => {
     // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
-    const firstGameDate = new Date(2021, 12, 24); // Ensures local midnight
+    const firstGameDate = new Date(2021, 12, 23); // Ensures local midnight
 
     // Get current local time
     const now = new Date();
+    console.log(now);
     // Convert both dates to local YYYY-MM-DD only (ignoring time)
     const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
     const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
