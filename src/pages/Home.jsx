@@ -156,7 +156,7 @@ function Home() {
 
                         </Col>
                     </Row>
-                    <Row>
+                    <Row className="cwd-swiper-animation">
                         <Swiper
                             modules={[FreeMode]}
                             spaceBetween={10}

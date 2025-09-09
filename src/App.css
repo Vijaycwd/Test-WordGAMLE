@@ -287,7 +287,9 @@ span.notification-count.badge.bg-danger {
 button, input{
 cursor: pointer;
 }
-
+.cwd-swiper-animation .swiper-wrapper{
+  justify-content: center !important;
+}
 /* Hide on larger screens */
 @media only screen and (max-width: 600px)  {
   .navbar-collapse {
@@ -307,6 +309,8 @@ cursor: pointer;
 .cwd-game-btn{
   font-size: 14px !important;
 }
-
+.cwd-swiper-animation .swiper-wrapper{
+  justify-content: start !important;
+}
 
 }
