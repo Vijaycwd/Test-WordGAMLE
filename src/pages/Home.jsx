@@ -9,7 +9,11 @@ import Axios from 'axios';
 import FeedbackButton from './FeedbackButton';
 import { useLocation } from 'react-router-dom';
 import TitleLogo from '../../src/WordleTitleLogo.png';
-
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation, FreeMode } from "swiper/modules";
+import { FaRunning, FaDumbbell, FaTree } from "react-icons/fa"; // Example icons
 
 function Home() {
     const baseURL = import.meta.env.VITE_BASE_URL;
@@ -152,35 +156,46 @@ function Home() {
 
                         </Col>
                     </Row>
-                    <div className="d-flex overflow-auto py-2">
-                        <Button 
-                            className="btn-lg mx-2 flex-shrink-0" 
-                            onClick={() => handleNavigation('wordle')}
-                        >
-                            Wordle
-                        </Button>
+                    <Row>
+                        <Swiper
+                            modules={[FreeMode]}
+                            spaceBetween={10}
+                            slidesPerView="auto"
+                            freeMode
+                            >
+                            <SwiperSlide style={{ width: "auto" }}>
+                                <Button className="btn-lg w-100" onClick={() => handleNavigation('wordle')}>
+                                Wordle
+                                </Button>      
+                            </SwiperSlide>
 
-                        <Button 
-                            className="btn-lg mx-2 flex-shrink-0" 
-                            onClick={() => handleNavigation('connections')}
-                        >
-                            Connections
-                        </Button>
+                            <SwiperSlide style={{ width: "auto" }}>
+                                <Button className="btn-lg w-100" onClick={() => handleNavigation('connections')}>
+                                Connections
+                                </Button>
+                            </SwiperSlide>
 
-                        <Button 
-                            className="btn-lg mx-2 flex-shrink-0" 
-                            onClick={() => handleNavigation('phrazle')}
-                        >
-                            Phrazle
-                        </Button>
-
-                        <Button 
-                            className="btn-lg mx-2 flex-shrink-0" 
-                            onClick={() => handleNavigation('quordle')}
-                        >
-                            Quordle
-                        </Button>
-                        </div>
+                            <SwiperSlide style={{ width: "auto" }}>
+                               <Button className="btn-lg w-100" onClick={() => handleNavigation('phrazle')}>
+                                Phrazle
+                                </Button>
+                            </SwiperSlide>
+                            <SwiperSlide style={{ width: "auto" }}>
+                               <Button className="btn-lg w-100" onClick={() => handleNavigation('quordle')}>
+                                Quordle
+                                </Button>
+                            </SwiperSlide>
+                        </Swiper>
+                        {/* <Col className="text-center py-1" md={4} s={12}>
+                            <Button className="btn-lg" onClick={() => handleNavigation('wordle')}>Wordle</Button>
+                        </Col>
+                        <Col className="text-center py-1" md={4} s={12}>
+                            <Button className="btn-lg" onClick={() => handleNavigation('connections')}>Connections</Button>
+                        </Col>
+                        <Col className="text-center py-1" md={4} s={12}>
+                            <Button className="btn-lg" onClick={() => handleNavigation('phrazle')}>Phrazle</Button>
+                        </Col> */}
+                    </Row>
                     <Row>
                         <Col className="py-3">
                             <p className="text-center">
