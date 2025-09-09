@@ -56,7 +56,7 @@ function QuordleStatistics({ statschart }) {
                         <ul>
                             <li>
                                 <div className='value'>{totalGame}</div>
-                                <div className='bottom-text'>Completed</div>
+                                <div className='bottom-text'>Played</div>
                             </li>
                             <li>
                                 <div className='value'>{totalWin}</div>
@@ -64,7 +64,7 @@ function QuordleStatistics({ statschart }) {
                             </li>
                             <li>
                                 <div className='value'>{currentStreak}</div>
-                                <div className='bottom-text'>Current Streak</div>
+                                <div className='bottom-text'>Win Streak</div>
                             </li>
                             <li>
                                 <div className='value'>{maxStreak}</div>

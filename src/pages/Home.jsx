@@ -152,17 +152,35 @@ function Home() {
 
                         </Col>
                     </Row>
-                    <Row>
-                        <Col className="text-center py-1" md={4} s={12}>
-                            <Button className="btn-lg" onClick={() => handleNavigation('wordle')}>Wordle</Button>
-                        </Col>
-                        <Col className="text-center py-1" md={4} s={12}>
-                            <Button className="btn-lg" onClick={() => handleNavigation('connections')}>Connections</Button>
-                        </Col>
-                        <Col className="text-center py-1" md={4} s={12}>
-                            <Button className="btn-lg" onClick={() => handleNavigation('phrazle')}>Phrazle</Button>
-                        </Col>
-                    </Row>
+                    <div className="d-flex overflow-auto py-2">
+                        <Button 
+                            className="btn-lg mx-2 flex-shrink-0" 
+                            onClick={() => handleNavigation('wordle')}
+                        >
+                            Wordle
+                        </Button>
+
+                        <Button 
+                            className="btn-lg mx-2 flex-shrink-0" 
+                            onClick={() => handleNavigation('connections')}
+                        >
+                            Connections
+                        </Button>
+
+                        <Button 
+                            className="btn-lg mx-2 flex-shrink-0" 
+                            onClick={() => handleNavigation('phrazle')}
+                        >
+                            Phrazle
+                        </Button>
+
+                        <Button 
+                            className="btn-lg mx-2 flex-shrink-0" 
+                            onClick={() => handleNavigation('quordle')}
+                        >
+                            Quordle
+                        </Button>
+                        </div>
                     <Row>
                         <Col className="py-3">
                             <p className="text-center">

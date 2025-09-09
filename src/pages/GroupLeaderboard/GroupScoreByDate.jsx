@@ -51,7 +51,7 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
             console.error('Unexpected date format:', formattedDateStr);
         }
     }
-    console.log('minDate:', minDate.toISOString());
+    //console.log('minDate:', minDate.toISOString());
 
 
     const minDateStr = minDate.toISOString().split('T')[0];
@@ -366,13 +366,38 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
     // ));
     
 
+    // const getTotalScore = (gameName, score) => {
+    //     const cleanedName = gameName ? gameName.trim().toLowerCase() : "";
+
+    //     if (cleanedName === "wordle") return 7;         // max 6
+    //     if (cleanedName === "connections") return 4;    // 4 groups
+    //     if (cleanedName === "phrazle") return 7;        // like Wordle
+
+    //     if (cleanedName === "quordle") {
+    //         // Quordle special logic
+    //         const numScore = Number(score);
+
+    //         if (isNaN(numScore)) return null;
+
+    //         // Valid wins: usually between 4 (best) and ~27
+    //         if (numScore > 0 && numScore < 30) {
+    //         return numScore;
+    //         }
+
+    //         // Scores >= 31 mean loss
+    //         return "LOSS";
+    //     }
+
+    //     return 1; // default
+    // };
+
     // Function to get the max possible score for a game
     const getTotalScore = (gameName) => {
         const cleanedName = gameName ? gameName.trim().toLowerCase() : "";
         return cleanedName === "wordle" ? 7 :
             cleanedName === "connections" ? 4 :
             cleanedName === "phrazle" ? 7 :
-            cleanedName === "quordle" ? 9 :
+            cleanedName === "quordle" ? 31 :
             1; // Default to 1 if unknown
     };
 
@@ -425,7 +450,7 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
     wordle: "Gamle Score 7",
     connections: "Gamle Score 4",
     phrazle: "Gamle Score 7",
-    quordle: "Gamle Score 9"
+    quordle: "Gamle Score 31"
     }[game] || "No data available.";
 
     return (
@@ -439,9 +464,10 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
                     maxDate={new Date()}
                 /> */}
                 <DatePicker
+                   
                     onChange={handleDateChange}
                     customInput={<ExampleCustomInput />}
-                    minDate={minDate}
+                    minDate={minDateStr}
                     maxDate={game === 'phrazle' ? maxSelectableDate : dayjs().subtract(1, 'day').toDate()}
                     />
             </div>
@@ -720,13 +746,13 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
                                    
                                     const isQuordleValidScore =
                                         data.gamename === "quordle" ? data.gamlescore >= 10 && data.gamlescore <= 30 : true;
-
+                                    console.log(topScorers);
                                     const isSingleWinner =
                                         isQuordleValidScore &&
                                         topScorers.length === 1 &&
                                         topScorers[0].username === data.username;
-                                    console.log();
-                                    
+                                    // console.log(isSingleWinner);
+
                                     const isSharedWinner =
                                         isQuordleValidScore &&
                                         topScorers.length > 1 &&
