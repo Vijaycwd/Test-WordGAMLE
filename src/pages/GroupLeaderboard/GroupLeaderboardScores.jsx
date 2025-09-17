@@ -7,8 +7,7 @@ import { toast } from 'react-toastify';
 import WordlePlayService from '../../components/Games/Wordle/WordlePlayService';
 import ConnectionPlayService from '../../components/Games/Connections/ConnectionPlayService';
 import PhrazlePlayService from '../../components/Games/Phrazle/PhrazlePlayService';
-import QuordlePlayService from '../../components/Games/Quordle/QuordlePlayService';
-
+import Phrazlegame from '../../components/Games/Phrazle/Phrazlegame';
 
 function GroupLeaderboardScores({ setLatestJoinDate, setSelectedMember, setShowProfile }) {
     const baseURL = import.meta.env.VITE_BASE_URL;
@@ -37,6 +36,7 @@ function GroupLeaderboardScores({ setLatestJoinDate, setSelectedMember, setShowP
     const [localLatestJoinDate, setLocalLatestJoinDate] = useState(null);
 
     const formattedDateStr = localLatestJoinDate ? localLatestJoinDate.slice(0, 10) : null;
+    
     const date = new Date(localLatestJoinDate);
     const hours = date.getHours();
     const groupPeriod = hours < 12 ? "AM" : "PM";
@@ -356,7 +356,7 @@ let sheriffWinners = [];
                                     return (
                                         <div className="text-center mb-3 missed-user-section py-3 px-2">
                                             <h4 className="text-center">Today's Leaderboard</h4>
-                                            <p>The Leaderboard will be viewable when all group members have played.</p>
+                                            <p>Viewable when all have played.</p>
                                             <p className="mb-1">Yet to play:</p>
                                             {missedUsers.map((user, i) => (
                                             <div key={i} className="fw-bold">
@@ -365,7 +365,9 @@ let sheriffWinners = [];
                                             ))}
 
                                             {missedUsers.some(user => user.email === userEmail) && (
-                                            <PhrazlePlayService />
+                                                <>
+                                                <PhrazlePlayService groupId={id} gameName={game} userId={userId}/>
+                                            </>
                                             )}
                                         </div>
                                     );
@@ -547,7 +549,7 @@ let sheriffWinners = [];
                                     return (
                                         <div className="text-center mb-3 missed-user-section py-3 px-2">
                                             <h4 className="text-center">Today's Leaderboard</h4>
-                                            <p>The Leaderboard will be viewable when all group members have played.</p>
+                                            <p>Viewable when all have played.</p>
                                             <p className="mb-1">Yet to play:</p>
                                             {missedUsers.map((user, i) => (
                                                 <div key={i} className="fw-bold">
@@ -556,11 +558,11 @@ let sheriffWinners = [];
                                             ))}
                                             {missedUsers.some(user => user.email === userEmail) && currentUserData && (
                                             currentUserData.gamename === 'connections' ? (
-                                                <ConnectionPlayService />
+                                                <ConnectionPlayService groupId={id} gameName={game} userId={userId}/>
                                             ) : currentUserData.gamename === 'wordle' ? (
-                                                <WordlePlayService />
+                                                <WordlePlayService groupId={id} gameName={game} userId={userId}/>
                                             ) : currentUserData.gamename === 'quordle' ? (
-                                                <QuordlePlayService />
+                                                <QuordlePlayService groupId={id} gameName={game} userId={userId}/>
                                             ) : null
                                             )}
                                         </div>

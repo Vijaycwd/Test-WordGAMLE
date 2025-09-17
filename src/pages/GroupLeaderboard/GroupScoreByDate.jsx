@@ -36,7 +36,7 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
     const groupPeriod = hours < 12 ? "AM" : "PM";
     
     let minDate = new Date(); // fallback
-    console.log(formattedDateStr);
+
     if (formattedDateStr && typeof formattedDateStr === 'string') {
         const parts = formattedDateStr.split('-');
         if (parts.length === 3) {
@@ -80,21 +80,6 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
         }
     }, [id, userId]); 
 
-
-
-    // Function to format date for backend
-    //const formatDateForBackend = (date) => moment(date).format('YYYY-MM-DD');
-
-    // Handle date selection
-    // const handleDateChange = (date) => {
-    //     setStartDate(date);
-    //     fetchDataByDate(formatDateForBackend(date));  // Fetch data on date change
-    // };
-
-    // const formatDateForBackend = (date) => {
-    //     if (!date || isNaN(date.getTime())) return "";
-    //     return moment(date).format("YYYY-MM-DD");
-    // };
     const formatDateForBackend = (date) => {
         if (!date) return "";
         const m = moment(date);
@@ -746,7 +731,7 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
                                    
                                     const isQuordleValidScore =
                                         data.gamename === "quordle" ? data.gamlescore >= 10 && data.gamlescore <= 30 : true;
-                                    console.log(topScorers);
+                                    
                                     const isSingleWinner =
                                         isQuordleValidScore &&
                                         topScorers.length === 1 &&
@@ -877,8 +862,10 @@ function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }
                 <GetGroupMessagesModal 
                     groupId={id}
                     gameName={game}
-                    periodDate={dayjs(startDate).format("YYYY-MM-DD")}
+                    periodDate={dayjs(startDate).format("YYYY-MM-DD HH:mm:ss")}
                     periodType={game == 'phrazle' ? period : ''}
+                    userId={userId}
+                    archive = 'true'
                 />
                 </Col>
             </Row>

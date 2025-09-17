@@ -24,7 +24,7 @@ const GroupInvites = ({enable_invitation}) => {
       const response = await axios.get(
         `${baseURL}/groups/get-invites.php?user_id=${userId}`
       );
-
+      
       const newInvites = Array.isArray(response.data.invitations)
         ? response.data.invitations
         : [];
@@ -128,12 +128,11 @@ const handleDeclineInvite = async (inviteId) => {
 };
   // Invite polling effect
   useEffect(() => {
-    if (enable_invitation == 1) {
       fetchGroupInvites();
       inviteIntervalRef.current = setInterval(fetchGroupInvites, 8000);
       return () => clearInterval(inviteIntervalRef.current);
-    }
-  }, [enable_invitation]);
+    
+  }, []);
 
   // Message polling effect
   useEffect(() => {
@@ -142,45 +141,44 @@ const handleDeclineInvite = async (inviteId) => {
     return () => clearInterval(messageIntervalRef.current);
   }, []);
 
-  const handleClickGroup = async(e, groupId, game, userId) => {
-    e.preventDefault(); 
+  const handleClickGroup = async (e, groupId, game, userId, msgId) => {
+    e.preventDefault();
     setGroupMessages([]);
-    setShowDropdown(!showDropdown)
+    setShowDropdown(false);
+
     try {
       await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
         group_id: groupId,
-        msg_from:'group',
+        msg_from: 'group',
         game_name: game,
-        user_id: userId, // current user
+        user_id: userId,
       });
-      // After updating seen_ids, navigate to the link
-     navigate(`/group/${groupId}/`);
-    } catch (error) {
-      console.error("Axios error:", error);
       
-    }
-  
-  }
-
-  const handleClick = async (e, groupId, game, userId) => {
-    e.preventDefault(); // stop immediate navigation
-    setGroupMessages(''); // optional: clear messages
-    setShowDropdown(!showDropdown)
-
-    try {
-      await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
-        group_id: groupId,
-        msg_from:'game',
-        game_name: game,
-        user_id: userId, // current user
-      });
-
-      // After updating seen_ids, navigate to the link
-      navigate(`/group/${groupId}/stats/${game}`);
+      navigate(`/group/${groupId}?msg_id=${msgId}`);
     } catch (error) {
       console.error("Axios error:", error);
     }
   };
+
+  const handleClick = async (e, groupId, game, userId, msgId) => {
+    e.preventDefault();
+    setGroupMessages([]);
+    setShowDropdown(false);
+
+    try {
+      await axios.post(`${baseURL}/groups/update-seen-ids.php`, {
+        group_id: groupId,
+        msg_from: 'game',
+        game_name: game,
+        user_id: userId,
+      });
+
+      navigate(`/group/${groupId}/stats/${game}?msg_id=${msgId}`);
+    } catch (error) {
+      console.error("Axios error:", error);
+    }
+  };
+
   return (
     <Dropdown show={showDropdown} onToggle={() => setShowDropdown(!showDropdown)}>
       <Dropdown.Toggle variant="light" id="group-invites">
@@ -229,34 +227,41 @@ const handleDeclineInvite = async (inviteId) => {
               {Array.isArray(groupMessages) && groupMessages.length > 0 &&
                 groupMessages.map((msg) => (
                   <ListGroup.Item key={`msg-${msg.id}`}>
-                    {msg.msg_from == 'group' ? (
-                      <>
-                    
-                    <p>
-                      
-                      {msg.message}{" "}
-                      <Link
-                        to={`/group/${msg.group_id}`}
-                        onClick={(e) => handleClickGroup(e, msg.group_id, msg.game_name, userId)}
-                      >
-                        View
-                      </Link>
-                    </p>
-                    </>
-                  ) : (
-                    <>
-                    <p>
-                      {msg.message}{" "}
-                      <Link
-                        to={`/group/${msg.group_id}/stats/${msg.game_name}`}
-                        onClick={(e) => handleClick(e, msg.group_id, msg.game_name, userId)}
-                      >
-                        View
-                      </Link>
-                    </p>
-                    </>
-                  )}
+                    {msg.msg_from === 'group' ? (
+                      <p>
+                        {msg.message}{" "}
+                        <Link
+                          to={
+                            msg.msg_id
+                              ? `/group/${msg.group_id}?msg_id=${msg.msg_id}`
+                              : `/group/${msg.group_id}`
+                          }
+                          onClick={(e) =>
+                            handleClickGroup(e, msg.group_id, msg.game_name, userId, msg.msg_id)
+                          }
+                        >
+                          View
+                        </Link>
+                      </p>
+                    ) : (
+                      <p>
+                        {msg.message}{" "}
+                        <Link
+                          to={
+                            msg.msg_id
+                              ? `/group/${msg.group_id}/stats/${msg.game_name}?msg_id=${msg.msg_id}`
+                              : `/group/${msg.group_id}/stats/${msg.game_name}`
+                          }
+                          onClick={(e) =>
+                            handleClick(e, msg.group_id, msg.game_name, userId, msg.msg_id)
+                          }
+                        >
+                          View
+                        </Link>
+                      </p>
+                    )}
                   </ListGroup.Item>
+
                 ))
               }
             </ListGroup>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,9 +6,10 @@ import { toast } from 'react-toastify';
 import LoginModal from './Modals/LoginModal';
 import ConnectionsModal from './Modals/ConnectionsScoreModal';
 
-function ConnectionPlayService({ updateStatsChart }) {
+function ConnectionPlayService({ updateStatsChart, groupId, gameName }) {
   const baseURL = import.meta.env.VITE_BASE_URL;
   const USER_AUTH_DATA = JSON.parse(localStorage.getItem('auth')) || {};
+  const userId = USER_AUTH_DATA?.id;
   const { username: loginUsername, email: loginUserEmail } = USER_AUTH_DATA;
   
   const [showForm, setShowForm] = useState(false);
@@ -21,7 +22,8 @@ function ConnectionPlayService({ updateStatsChart }) {
   const [totalWinGames, setTotalWinGames] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
-  
+  const [lastGroup, setLastGroup] = useState(null);
+
   const navigate = useNavigate();
 
   const handleFormClose = () => {
@@ -79,7 +81,24 @@ const determineAttempts = (score) => {
   };
 };
 
+//get latest group intraction
+useEffect(() => {
+  const fetchLastGroup = async () => {
+    try {
+      const response = await Axios.get(
+        `${baseURL}/games/connections/get-last-group.php`,
+        { params: { user_id: userId } }
+      );
+      setLastGroup(response.data);
+    } catch (error) {
+      console.error("Error fetching last group:", error);
+    }
+  };
 
+  if (userId) {
+    fetchLastGroup();
+  }
+}, [userId]);
 
 const onSubmit = async (event) => {
   event.preventDefault();
@@ -124,6 +143,9 @@ const onSubmit = async (event) => {
     guessDistribution: updatedDistribution,
     handleHighlight: mistakeCount,
     timeZone,
+    groupId:lastGroup?.group_id,
+    gameName:"connections",
+    userId
   };
 
   try {
@@ -166,7 +188,14 @@ const onSubmit = async (event) => {
 
       await updateTotalGamesPlayed(TotalGameObject);
       setScore("");
-      navigate("/connectionstats");
+      const latest_group_id = lastGroup?.group_id;
+      if(latest_group_id){
+        navigate(`/group/${latest_group_id}/stats/connections`);
+      }
+      else{
+        navigate("/connectionstats");
+      }
+      
     } else {
       toast.error(res.data.message);
     }

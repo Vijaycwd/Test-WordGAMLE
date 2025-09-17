@@ -8,8 +8,14 @@ import GroupScoreByDate from './GroupLeaderboard/GroupScoreByDate';
 import MemberProfile from '../constant/Models/MemberProfile';
 import GroupGameChat  from '../pages/GroupLeaderboard/GroupGameChat';
 import dayjs from "dayjs";
+import { useLocation } from "react-router-dom";
 
 function GroupStatsPage() {
+
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const msgId = params.get("msg_id");
+
   const baseURL = import.meta.env.VITE_BASE_URL;
   const { id, groupName, game } = useParams(); // Extract groupName and game from URL
   const [group, setGroup] = useState(null);
@@ -21,7 +27,7 @@ function GroupStatsPage() {
   const [selectedMember, setSelectedMember] = useState(null);
   const now = new Date();
   const period = now.getHours() < 12 ? "AM" : "PM";
-
+  
   useEffect(() => {
     const fetchGroupDetails = async () => {
         try {
@@ -42,6 +48,11 @@ function GroupStatsPage() {
     fetchGroupDetails();
   }, [id, userId]);
 
+  // const getAMPMPeriod = () => {
+  //   const hour = new Date().getHours();
+  //   return hour < 12 ? 'AM' : 'PM';
+  // };
+
   return (
     <>
     <Container>
@@ -53,14 +64,15 @@ function GroupStatsPage() {
           <GroupLeaderboardScores setLatestJoinDate={setLatestJoinDate}  setSelectedMember={setSelectedMember} setShowProfile={setShowProfile}/>
         </Col>
       </Row>
-      <Row>
-        <Col className="text-center">
-          <GroupGameChat 
+      <Row className="justify-content-center"> 
+        <Col md={6}>
+          <GroupGameChat
             groupId={id}
             gameName={game}
             createdAt={dayjs().format("YYYY-MM-DD HH:mm:ss")}
             periodType={game === "phrazle" ? period : ""}
             userId={userId}
+            highlightMsgId={msgId}
           />
         </Col>
       </Row>

@@ -5,13 +5,15 @@ import dayjs from "dayjs";
 import GroupChatMessagesByDate from "./GroupChatMessagesByDate";
 import GroupChatInput from "./GroupChatInput";
 
-function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
+function GroupGameChat({ groupId, gameName, createdAt, periodType, userId, highlightMsgId, generalChat }) {
+  console.log(groupId);
   const baseURL = import.meta.env.VITE_BASE_URL;
   const [messages, setMessages] = useState([]);
-
+  
   // Fetch messages
   const fetchMessages = async () => {
-    const created_at = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD");
+    
+   const created_at = dayjs(createdAt, "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD");
     try {
       const baseParams = { group_id: groupId, game_name: gameName, created_at };
       const params = gameName === "phrazle" ? { ...baseParams, period: periodType } : baseParams;
@@ -32,22 +34,55 @@ function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
     }
   }, [groupId, gameName]);
 
+  // Fetch messages
+  const fetchGeneralMessages = async () => {
+   const created_at = dayjs().format("YYYY-MM-DD");
+    try {
+      const baseParams = { group_id: groupId, game_name: gameName, created_at, general_chat: generalChat };
+      const params = gameName === "phrazle" ? { ...baseParams, period: periodType } : baseParams;
+
+      const response = await axios.get(
+        `${baseURL}/groups/get-user-messages.php`,
+        { params }
+      );
+      setMessages(response.data);
+    } catch (error) {
+      console.error("Failed to fetch messages:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (groupId && generalChat) {
+      fetchGeneralMessages();
+    }
+  }, [groupId, generalChat]);
+
   // Send message
   const handleSend = async (messageText) => {
+    // Decide timestamp
+    const created_at = generalChat
+      ? dayjs().format("YYYY-MM-DD HH:mm:ss")   // system local timestamp
+      : createdAt;                              // fallback
+
     await axios.post(`${baseURL}/groups/send-user-message.php`, {
       group_id: groupId,
       game_name: gameName,
-      created_at: createdAt,
+      created_at: created_at,
       user_id: userId,
       message: messageText,
+      general_chat: generalChat
     });
-    fetchMessages();
+
+    if (generalChat) {
+      fetchGeneralMessages();
+    } else {
+      fetchMessages();
+    }
   };
 
+
   return (
-    <Row className="justify-content-center">
-      <Col md={6}>
-        {/* Chat window */}
+        <>
         <div
           className="chat-box border rounded p-3 mb-3"
           style={{ height: "350px", overflowY: "auto", background: "#e8f3fb" }}
@@ -56,13 +91,14 @@ function GroupGameChat({ groupId, gameName, createdAt, periodType, userId }) {
             messages={messages}
             userId={userId}
             baseURL={baseURL}
+            highlightMsgId={highlightMsgId}
+            generalChat
           />
         </div>
 
         {/* Input box */}
         <GroupChatInput onSend={handleSend} gameName={gameName} />
-      </Col>
-    </Row>
+        </>
   );
 }
 

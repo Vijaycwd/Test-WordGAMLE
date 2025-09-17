@@ -7,7 +7,6 @@ import Logo from '../../../Logo.png';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FaPencilAlt, FaUpload } from 'react-icons/fa';
 import ImageCropModal from './Modals/ImageCropModal';
-import NotificationSettings from '../../../pages/groups/NotificationSettings';
 
 function UserProfile() {
     const baseURL = import.meta.env.VITE_BASE_URL;
@@ -37,6 +36,7 @@ function UserProfile() {
     const toggleConfirmPasswordVisibility = () => setShowConfirmPassword(!showConfirmPassword);
 
     const [showManage, setShowManage] = useState(false);
+
     const [registrationformText, setRegistrationFormText] = useState({
             firstname_label: '',
             firstname_desc: '',
@@ -63,21 +63,21 @@ function UserProfile() {
             profile_picture_desc: '',
             profile_picture_placeholder: '',
     });
-    
+
     useEffect(() => {
         Axios.get(`${baseURL}/user/get-homepage-text.php`)
-            .then((res) => {
+          .then((res) => {
             if (res.status === 200) {
-                setRegistrationFormText(res.data);
+              setRegistrationFormText(res.data);
             } else {
-                console.warn('No homepage text found');
+              console.warn('No homepage text found');
             }
-            })
-            .catch((err) => {
+          })
+          .catch((err) => {
             console.error('Error fetching homepage text:', err);
-            });
+          });
     }, [baseURL]);
-
+        
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -230,7 +230,7 @@ function UserProfile() {
                                 <label htmlFor="existingprofilePicInput" className="edit-icon-label" onClick={handleAvatarClick}>
                                     <FaPencilAlt size={18} color="#ffffff" />
                                 </label>
-                                    <label htmlFor="profilePicInput" className="upload-icon-label">
+                                 <label htmlFor="profilePicInput" className="upload-icon-label">
                                     <FaUpload  size={18} color="#ffffff" />
                                 </label>
                                 <input
@@ -267,7 +267,7 @@ function UserProfile() {
                         </Form.Group>
 
                         <Form.Group className="mt-3">
-                            <Form.Label
+                           <Form.Label
                                 dangerouslySetInnerHTML={{
                                 __html: `${registrationformText.lastname_label} <span style="color:red">*</span>`
                                 }}
@@ -393,12 +393,6 @@ function UserProfile() {
                 </Col>
             </Row>
 
-            {/* <Row className='align-content-center justify-content-center'>
-                <Col md={5}>
-                    <NotificationSettings userId= {userData.id}/>
-                </Col>
-            </Row> */}
-
             <Modal show={showManage} onHide={() => setShowManage(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Manage Account</Modal.Title>
@@ -459,7 +453,6 @@ function UserProfile() {
                 >
                 Cancel
                 </Button>
-
                 <Button variant="danger" onClick={handleDeleteAccount}>
                 Yes, Delete
                 </Button>

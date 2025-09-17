@@ -1,11 +1,11 @@
 import React, { useState, useEffect  } from 'react';
 import { Col, Container, Row, Button } from 'react-bootstrap';
-import Wordlegamesection from './Games/Wordle/Wordlegamesection';
+import Wordlegamesection from './Wordlegamesection';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import LoginModal from './Games/Wordle/Modals/LoginModal';
-import WordleModal from './Games/Wordle/Modals/WordleScoreModal';
+import LoginModal from './Modals/LoginModal';
+import WordleModal from './Modals/WordleScoreModal';
 
 function GamesLayout() {
   const baseURL = import.meta.env.VITE_BASE_URL;
@@ -175,10 +175,7 @@ function GamesLayout() {
             gamleScore: guessesUsed,
             createdAt: adjustedCreatedAt,
             currentUserTime: adjustedCreatedAt,
-            timeZone,
-            groupId:lastGroup?.group_id,
-            gameName:"wordle",
-            userId
+            timeZone
         };
        
         try {
