@@ -28,7 +28,7 @@ function QuordleStatistics({ statschart }) {
                     updateStatistics();
                 }
                 const statistics = response.data.statistics;
-                // console.log(statistics);
+                console.log(statistics);
                 setQuordleStatsData(statistics);
                 setTotalGame(statistics.totalGamesPlayed);
                 setTotalWin(statistics.winPercentage);

@@ -7,18 +7,41 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
 
+  // const calculateGameNumber = () => {
+  //   const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
+  //   const now = new Date();
+  //   console.log(now);
+  //   // Today’s UTC midnight
+  //   const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+
+  //   // Difference in days
+  //   const diffInDays = Math.floor((todayUTC - firstGameDate) / (24 * 60 * 60 * 1000));
+
+  //   return diffInDays; // Game # starts at 1
+  // };
+
   const calculateGameNumber = () => {
-  const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
-  const now = new Date();
+      // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
+      const firstGameDate = new Date(2022, 0, 24); // Ensures local midnight
 
-  // Today’s UTC midnight
-  const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+      // Get current local time
+      const now = new Date();
 
-  // Difference in days
-  const diffInDays = Math.floor((todayUTC - firstGameDate) / (24 * 60 * 60 * 1000));
+      // Convert both dates to local YYYY-MM-DD only (ignoring time)
+      const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
+      const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
 
-  return diffInDays; // Game # starts at 1
-};
+      // Calculate difference in full days
+      const diffInDays = Math.floor((nowDateOnly - firstDateOnly) / (24 * 60 * 60 * 1000));
+
+      // Game number starts at 1
+      const currentGameNumber = diffInDays;
+
+      // console.log("Now Local Time:", now.toString());
+      // console.log("Calculated Game Number:", currentGameNumber);
+
+      return currentGameNumber;
+  };
 
 useEffect(() => {
     setGameNumber(calculateGameNumber());
