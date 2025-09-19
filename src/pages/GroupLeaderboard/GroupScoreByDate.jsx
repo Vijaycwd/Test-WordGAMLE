@@ -10,6 +10,7 @@ import dayjs from "dayjs";
 import GetGroupMessagesModal from '../../constant/Models/GetGroupMessagesModal';
 
 function GroupScoreByDate({ latestJoinDate, setSelectedMember, setShowProfile  }) {
+    // console.log(latestJoinDate);
     const baseURL = import.meta.env.VITE_BASE_URL;
     const { id, groupName, game } = useParams();
     const [todayLeaderboard, setTodayLeaderboard] = useState([]);

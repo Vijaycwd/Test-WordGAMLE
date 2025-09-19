@@ -6,7 +6,7 @@ import GroupChatMessagesByDate from "./GroupChatMessagesByDate";
 import GroupChatInput from "./GroupChatInput";
 
 function GroupGameChat({ groupId, gameName, createdAt, periodType, userId, highlightMsgId, generalChat }) {
-  console.log(groupId);
+  // console.log(groupId);
   const baseURL = import.meta.env.VITE_BASE_URL;
   const [messages, setMessages] = useState([]);
   

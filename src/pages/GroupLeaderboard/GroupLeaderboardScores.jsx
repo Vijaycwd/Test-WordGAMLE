@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import WordlePlayService from '../../components/Games/Wordle/WordlePlayService';
 import ConnectionPlayService from '../../components/Games/Connections/ConnectionPlayService';
 import PhrazlePlayService from '../../components/Games/Phrazle/PhrazlePlayService';
+import QuordlePlayService from '../../components/Games/Quordle/QuordlePlayService';
 import Phrazlegame from '../../components/Games/Phrazle/Phrazlegame';
 
 function GroupLeaderboardScores({ setLatestJoinDate, setSelectedMember, setShowProfile }) {

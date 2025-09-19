@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +6,11 @@ import { toast } from 'react-toastify';
 import LoginModal from './Modals/LoginModal';
 import QuordleModal from './Modals/QuordleScoreModal';
 
-function ConnectionPlayService({ updateStatsChart }) {
+function QuordlePlayService({ updateStatsChart }) {
   const baseURL = import.meta.env.VITE_BASE_URL;
   const USER_AUTH_DATA = JSON.parse(localStorage.getItem('auth')) || {};
   const { username: loginUsername, email: loginUserEmail } = USER_AUTH_DATA;
-  
+  const userId = USER_AUTH_DATA?.id;
   const [showForm, setShowForm] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const [score, setScore] = useState('');
@@ -21,6 +21,7 @@ function ConnectionPlayService({ updateStatsChart }) {
   const [totalWinGames, setTotalWinGames] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
+   const [lastGroup, setLastGroup] = useState(null);
   
   const navigate = useNavigate();
 
@@ -128,7 +129,24 @@ const determineAttempts = (score) => {
 };
 
 
+  //get latest group intraction
+  useEffect(() => {
+    const fetchLastGroup = async () => {
+      try {
+        const response = await Axios.get(
+          `${baseURL}/games/wordle/get-last-group.php`,
+          { params: { user_id: userId } }
+        );
+        setLastGroup(response.data);
+      } catch (error) {
+        console.error("Error fetching last group:", error);
+      }
+    };
   
+    if (userId) {
+      fetchLastGroup();
+    }
+  }, [userId]);
   
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -214,7 +232,13 @@ const determineAttempts = (score) => {
   
         await updateTotalGamesPlayed(TotalGameObject);
         setScore("");
-        navigate("/quordlestats");
+        const latest_group_id = lastGroup?.group_id;
+        if(latest_group_id){
+          navigate(`/group/${latest_group_id}/stats/quordle`);
+        }
+        else{
+          navigate("/quordlestats");
+        }
       } else {
         toast.error(res.data.message);
       }
@@ -258,4 +282,4 @@ const determineAttempts = (score) => {
     );
 }
 
-export default ConnectionPlayService;
+export default QuordlePlayService;
