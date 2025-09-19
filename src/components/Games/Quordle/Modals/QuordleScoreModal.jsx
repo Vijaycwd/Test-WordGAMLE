@@ -6,6 +6,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   
   const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
+  const [currentDateTime, setcurrentDateTime] = useState();
 
   // const calculateGameNumber = () => {
   //   const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
@@ -26,7 +27,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
 
       // Get current local time
       const now = new Date();
-
+      setcurrentDateTime(now);
       // Convert both dates to local YYYY-MM-DD only (ignoring time)
       const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
       const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -97,9 +98,10 @@ useEffect(() => {
   return (
     <Modal show={showForm} onHide={handleFormClose}>
       <Modal.Header closeButton>
-        <p>Game No: {gameNumber}</p>
+        <p>Game No: {gameNumber}</p><br></br>
       </Modal.Header>
       <Modal.Body>
+        <p>Current Date and Time: {currentDateTime?.toLocaleString()}</p>
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>
