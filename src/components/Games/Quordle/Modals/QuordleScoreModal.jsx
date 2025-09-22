@@ -6,6 +6,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   
   const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
+  const [currentDateTime, setcurrentDateTime] = useState();
 
   // const calculateGameNumber = () => {
   //   const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
@@ -22,11 +23,11 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
 
   const calculateGameNumber = () => {
   // Start Date: Jan 24, 2022 00:00 UTC (fixed, not local)
-  const firstGameDateUTC = new Date(2022, 0, 24);
+  const firstGameDateUTC = Date.UTC(2022, 0, 24);
 
   // Current date in UTC midnight
   const now = new Date();
-
+  setcurrentDateTime(now);
   const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
   // Difference in full days
@@ -35,6 +36,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   return diffInDays;
 };
 
+console.log(currentDateTime);
 
 useEffect(() => {
     setGameNumber(calculateGameNumber());
