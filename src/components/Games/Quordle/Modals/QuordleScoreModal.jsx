@@ -21,37 +21,35 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   //   return diffInDays; // Game # starts at 1
   // };
 
-  const calculateGameNumber = () => {
-        // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
-        const firstGameDate = new Date(2022, 1, 10); // Ensures local midnight
-    
-        // Get current local time
-        const now = new Date();
-        console.log(now);
-        // Convert both dates to local YYYY-MM-DD only (ignoring time)
-        const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
-        const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-    
-        // Calculate difference in full days
-        const diffInDays = Math.floor((nowDateOnly - firstDateOnly) / (24 * 60 * 60 * 1000));
-    
-        // Game number starts at 1
-        const currentGameNumber = diffInDays + 17;
-    
-        // console.log("Now Local Time:", now.toString());
-        // console.log("Calculated Game Number:", currentGameNumber);
-    
-        return currentGameNumber;
-    };
+    const calculateGameNumberUTC = () => {
+      const firstGameUTC = new Date(Date.UTC(2022, 0, 24)); // Jan 24, 2022 UTC
+      const now = new Date();
+      console.log(now);
+      const firstUTC = Date.UTC(
+        firstGameUTC.getUTCFullYear(),
+        firstGameUTC.getUTCMonth(),
+        firstGameUTC.getUTCDate()
+      );
+
+      const todayUTC = Date.UTC(
+        now.getUTCFullYear(),
+        now.getUTCMonth(),
+        now.getUTCDate()
+      );
+
+      const diffDays = Math.floor((todayUTC - firstUTC) / (1000 * 60 * 60 * 24));
+      return diffDays; // first game = 0
+  };
+
     
     useEffect(() => {
-        setGameNumber(calculateGameNumber());
+        setGameNumber(calculateGameNumberUTC());
     
         // Check every minute and update exactly at 12:00 AM (Midnight)
         const interval = setInterval(() => {
             const now = new Date();
             if (now.getHours() === 0 && now.getMinutes() === 0) {
-                setGameNumber(calculateGameNumber());
+                setGameNumber(calculateGameNumberUTC());
             }
         }, 60 * 1000); // Check every minute
     
