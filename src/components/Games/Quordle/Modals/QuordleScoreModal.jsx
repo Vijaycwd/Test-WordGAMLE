@@ -69,7 +69,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
     const pastedData = event.clipboardData.getData('Text');
     const quordleTextExists = pastedData.includes('Daily Quordle');
     const gamenumberExists = pastedData.includes(String(gameNumber)); // FIXED
-    const todaysGameNumber = calculateGameNumber(); // Assuming this is used elsewhere
+    const todaysGameNumber = calculateGameNumberUTC(); // Assuming this is used elsewhere
 
     if (!quordleTextExists) {
       toast.error('This is not a Quordle game score!', { position: 'top-center' });

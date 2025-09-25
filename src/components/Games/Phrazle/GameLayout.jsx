@@ -22,7 +22,7 @@ function GamesLayout() {
   const [totalWinGames, setTotalWinGames] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const [maxStreak, setMaxStreak] = useState(0);
-   const [lastGroup, setLastGroup] = useState(null);
+  const [lastGroup, setLastGroup] = useState(null);
   const navigate = useNavigate();
 
   const handleFormClose = () => {
