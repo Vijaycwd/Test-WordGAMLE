@@ -19,6 +19,7 @@ function GamesLayout() {
   const [guessDistribution, setGuessDistribution] = useState([0, 0, 0, 0, 0, 0]);
   const [gameIsWin, setGameIsWin] = useState(false);
   const [userData, setUserData] = useState('');
+  const [lastGroup, setLastGroup] = useState(null);
   const navigate = useNavigate();
   const userEmail = USER_AUTH_DATA.email;
   const userId = USER_AUTH_DATA?.id;

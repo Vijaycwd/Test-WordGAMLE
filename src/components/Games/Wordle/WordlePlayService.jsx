@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import LoginModal from './Modals/LoginModal';
 import WordleModal from './Modals/WordleScoreModal';
 
-function WordlePlayService({ updateStatsChart, groupId, gameName  }) {
+function WordlePlayService({ updateStatsChart}) {
     const baseURL = import.meta.env.VITE_BASE_URL;
     const USER_AUTH_DATA = JSON.parse(localStorage.getItem('auth')) || {};
     const { username: loginUsername, email: loginUserEmail } = USER_AUTH_DATA;

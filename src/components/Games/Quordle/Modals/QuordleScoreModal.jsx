@@ -67,7 +67,7 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   // This function is triggered when a paste happens
   const handlePaste = (event) => {
     const pastedData = event.clipboardData.getData('Text');
-    const quordleTextExists = pastedData.includes('Quordle');
+    const quordleTextExists = pastedData.includes('Daily Quordle');
     const gamenumberExists = pastedData.includes(String(gameNumber)); // FIXED
     const todaysGameNumber = calculateGameNumber(); // Assuming this is used elsewhere
 
