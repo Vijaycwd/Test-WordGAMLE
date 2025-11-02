@@ -6,7 +6,6 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   
   const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
-  const [currentDateTime, setcurrentDateTime] = useState();
 
   // const calculateGameNumber = () => {
   //   const firstGameDate = Date.UTC(2022, 0, 24); // Quordle Day 1
@@ -22,27 +21,20 @@ const QuordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScor
   // };
 
   const calculateGameNumber = () => {
-      // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
-      const firstGameDate = new Date(2022, 0, 24); // Ensures local midnight
+  // Start Date: Jan 24, 2022 00:00 UTC (fixed, not local)
+  const firstGameDateUTC = new Date(2022, 0, 24);
 
-      // Get current local time
-      const now = new Date();
-      setcurrentDateTime(now);
-      // Convert both dates to local YYYY-MM-DD only (ignoring time)
-      const firstDateOnly = new Date(firstGameDate.getFullYear(), firstGameDate.getMonth(), firstGameDate.getDate());
-      const nowDateOnly = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  // Current date in UTC midnight
+  const now = new Date();
 
-      // Calculate difference in full days
-      const diffInDays = Math.floor((nowDateOnly - firstDateOnly) / (24 * 60 * 60 * 1000));
+  const nowUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
 
-      // Game number starts at 1
-      const currentGameNumber = diffInDays;
+  // Difference in full days
+  const diffInDays = Math.floor((nowUTC - firstGameDateUTC) / (24 * 60 * 60 * 1000));
 
-      // console.log("Now Local Time:", now.toString());
-      // console.log("Calculated Game Number:", currentGameNumber);
+  return diffInDays;
+};
 
-      return currentGameNumber;
-  };
 
 useEffect(() => {
     setGameNumber(calculateGameNumber());
@@ -101,7 +93,6 @@ useEffect(() => {
         <p>Game No: {gameNumber}</p><br></br>
       </Modal.Header>
       <Modal.Body>
-        <p>Current Date and Time: {currentDateTime?.toLocaleString()}</p>
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="formBasicName">
             <Form.Label>Name</Form.Label>

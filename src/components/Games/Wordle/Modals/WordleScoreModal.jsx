@@ -7,6 +7,7 @@ const WordleScoreModal = ({ showForm, handleFormClose, onSubmit, score, setScore
   const [isPasted, setIsPasted] = useState(false);
   const [gameNumber, setGameNumber] = useState(null);
 
+
   const calculateGameNumber = () => {
     // Start Date: June 19, 2021, 12:00 AM (Midnight Local Time)
     const firstGameDate = new Date(2021, 5, 19); // Ensures local midnight
